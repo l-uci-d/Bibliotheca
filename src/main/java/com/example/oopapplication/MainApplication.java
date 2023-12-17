@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.sql.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -22,8 +23,8 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        //ConnectDB con = new ConnectDB();
-        //Connection connection = con.Connect();
+        ConnectDB con = new ConnectDB();
+        Connection connection = con.Connect();
 
         launch();
     }

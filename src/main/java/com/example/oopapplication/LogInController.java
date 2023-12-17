@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.sql.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -50,6 +51,8 @@ public class LogInController {
     private boolean noErrors = false;
 
     public void initialize(){
+        ConnectDB con = new ConnectDB();
+        Connection connection = con.Connect();
         cmbYear.getItems().addAll(year);
         cmbStatus.getItems().addAll(status);
         cmbStatus.setOnAction(this::setText);
