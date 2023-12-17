@@ -1,0 +1,45 @@
+.mybutton {
+    -fx-background-color: #512da8;
+    -fx-text-fill: #fff;
+    -fx-padding: 10px 45px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-background-radius: 12px;
+    -fx-font-weight: 600;
+    -fx-letter-spacing: 0.5px;
+    -fx-text-transform: uppercase;
+
+	-fx-font-family:"Montserrat";
+	-fx-font-size: 24px;
+}
+
+
+.input{
+    -fx-background-color: #e8e8e8;
+    -fx-border: none;
+    -fx-padding: 5px 15px;
+    -fx-font-size: 13px;
+    -fx-background-radius: 12px;
+    -fx-width: 100%;
+    -fx-outline: none;
+	-fx-opacity: 1;
+}
+
+
+.pane{
+    -fx-background-color :  white;
+    -fx-background-radius :  75 75 75 75;
+    -fx-border-color :  black;
+    -fx-border-radius :  75 75 75 75;
+    -fx-border-width :  1;
+    -fx-padding: 0px;
+    -fx-box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.5), 0 0 10px 2px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.hiddenbutton{
+    -fx-background-color: transparent;
+    -fx-border-color: #fff;
+    -fx-border-radius: 12px;
+}
