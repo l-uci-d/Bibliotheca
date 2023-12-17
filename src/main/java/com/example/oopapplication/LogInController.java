@@ -26,7 +26,7 @@ public class LogInController {
     private Button btnSI, btnHeaderButton, btnSU;
 
     @FXML
-    private Label lblSubHeader, lblTitle, lblSubTitle, lblSubHeader1, lblAge, lblYear;
+    private Label lblSubHeader, lblTitle, lblSubTitle, lblSubHeader1, lblAge, lblYear, lblSIError, lblSUError;
 
     @FXML
     private TextField txtSINumber, txtSUNumber, txtFName, txtLName, txtCourse, txtAge;
@@ -86,23 +86,49 @@ public class LogInController {
         isSIMode = !isSIMode;
 
         }
-        public void exit(MouseEvent event){
 
 
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
-                Parent root = loader.load();
+        public void signUp(){
+        if(noErrors){
 
-                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            /********************
+             *  ADD TO DATABASE *
+             ********************/
+        }
+        else{
 
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            /*************************
+             *  DISPLAY ERROR LOGIC  *
+             *************************/
+
+
+        }
+
+        }
+        public void signIn(MouseEvent event) {
+
+            if (!noErrors) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
+                    Parent root = loader.load();
+
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            } else {
+
+                /*************************
+                 *  DISPLAY ERROR LOGIC  *
+                 *************************/
+
 
             }
         }
-
 }
 

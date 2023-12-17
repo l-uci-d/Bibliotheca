@@ -28,7 +28,7 @@
          <children>
             <AnchorPane fx:id="anchorPaneSI" layoutX="-2.0" layoutY="34.0" prefHeight="526.0" prefWidth="563.0">
                <children>
-                  <Button fx:id="btnSI" layoutX="203.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#exit" prefHeight="38.0" prefWidth="176.0" styleClass="mybutton" text="Sign in">
+                  <Button fx:id="btnSI" layoutX="203.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#signIn" prefHeight="38.0" prefWidth="176.0" styleClass="mybutton" text="Sign in">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -50,7 +50,7 @@
                      </cursor>
                   </TextField>
                   <PasswordField fx:id="passSi" layoutX="117.0" layoutY="268.0" prefHeight="39.0" prefWidth="330.0" promptText="Password..." styleClass="input" />
-                  <Label fx:id="lblSUError1" alignment="CENTER" layoutX="-3.0" layoutY="483.0" prefHeight="33.0" prefWidth="571.0" text="ERROR MESSAGE!!!!" textFill="RED">
+                  <Label fx:id="lblSIError" alignment="CENTER" layoutX="-3.0" layoutY="483.0" prefHeight="33.0" prefWidth="571.0" text="ERROR MESSAGE!!!!" textFill="RED">
                      <font>
                         <Font name="Montserrat" size="27.0" />
                      </font>
@@ -59,7 +59,7 @@
             </AnchorPane>
             <AnchorPane fx:id="anchorPaneSU" layoutX="282.0" layoutY="33.0" prefHeight="526.0" prefWidth="563.0">
                <children>
-                  <Button fx:id="btnSU" layoutX="189.0" layoutY="413.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="186.0" styleClass="mybutton" text="Sign up">
+                  <Button fx:id="btnSU" layoutX="189.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#signUp" prefHeight="51.0" prefWidth="186.0" styleClass="mybutton" text="Sign up">
                      <font>
                         <Font size="23.0" />
                      </font>
