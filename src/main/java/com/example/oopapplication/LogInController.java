@@ -55,6 +55,7 @@ public class LogInController {
         Connection connection = con.Connect();
         cmbYear.getItems().addAll(year);
         cmbStatus.getItems().addAll(status);
+        cmbStatus.setValue("Student");
         cmbStatus.setOnAction(this::setText);
         anchorPaneSU.setVisible(false);
         anchorPaneCover.toFront();
@@ -114,7 +115,7 @@ public class LogInController {
         }
         else{
             txtSUNumber.setPromptText("Guest Number...");
-            txtSUNumber.setText("");
+            txtCourse.setText("");
             cmbYear.setValue(null);
             txtCourse.setVisible(false);
             lblYear.setVisible(false);
