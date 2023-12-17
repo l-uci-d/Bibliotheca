@@ -57,6 +57,48 @@ public class LogInController {
         anchorPaneCover.toFront();
     }
 
+    public void signUp(){
+        if(noErrors){
+
+            /********************
+             *  ADD TO DATABASE *
+             ********************/
+
+        }
+
+        else{
+
+            /*************************
+             *  DISPLAY ERROR LOGIC  *
+             *************************/
+
+        }
+    }
+    public void signIn(MouseEvent event) {
+
+        if (!noErrors) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            } else {
+
+            /*************************
+             *  DISPLAY ERROR LOGIC  *
+             *************************/
+
+            }
+        }
+
     public void setText(ActionEvent event){
         if (Objects.equals(cmbStatus.getValue(), "Student")){
             txtSUNumber.setPromptText("Student Number (20XX-XXXXX)...");
@@ -73,7 +115,6 @@ public class LogInController {
             cmbYear.setVisible(false);
         }
     }
-
     public void toggleMode(){
         btnHeaderButton.setDisable(true);
         TranslateTransition moveTransition = new TranslateTransition(Duration.seconds(0.5), anchorPaneCover);
@@ -85,9 +126,9 @@ public class LogInController {
             signIntoCenter.setByX(anchorPaneMain1.getWidth()/2 - anchorPaneSI.getWidth()/2);
             signIntoCenter.play();
             signIntoCenter.setOnFinished(event ->{
-                    anchorPaneSI.setVisible(false);
-                    anchorPaneSU.setVisible(true);
-                    signUptoCenter.play();
+                anchorPaneSI.setVisible(false);
+                anchorPaneSU.setVisible(true);
+                signUptoCenter.play();
             });
             signUptoCenter.setByX(563/2);
 
@@ -96,9 +137,9 @@ public class LogInController {
             signUptoCenter.setByX(-anchorPaneMain1.getWidth()/2 + anchorPaneSI.getWidth()/2);
             signUptoCenter.play();
             signUptoCenter.setOnFinished(event ->{
-                   anchorPaneSU.setVisible(false);
-                   anchorPaneSI.setVisible(true);
-                   signIntoCenter.play();
+                anchorPaneSU.setVisible(false);
+                anchorPaneSI.setVisible(true);
+                signIntoCenter.play();
             });
             signIntoCenter.setByX(-563/2);
         }
@@ -109,51 +150,6 @@ public class LogInController {
         signIntoCenter.setInterpolator(Interpolator.LINEAR);
         signUptoCenter.setInterpolator(Interpolator.LINEAR);
         isSIMode = !isSIMode;
-
-        }
-
-
-        public void signUp(){
-        if(noErrors){
-
-            /********************
-             *  ADD TO DATABASE *
-             ********************/
-        }
-        else{
-
-            /*************************
-             *  DISPLAY ERROR LOGIC  *
-             *************************/
-
-
-        }
-
-        }
-        public void signIn(MouseEvent event) {
-
-            if (!noErrors) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
-                    Parent root = loader.load();
-
-                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                }
-            } else {
-
-                /*************************
-                 *  DISPLAY ERROR LOGIC  *
-                 *************************/
-
-
-            }
-        }
+    }
 }
 
