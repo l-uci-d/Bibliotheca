@@ -71,9 +71,10 @@ public class LogInController {
 
         else{
 
-            /*************************
-             *  DISPLAY ERROR LOGIC  *
-             *************************/
+            /******************************
+             *  DISPLAY ERROR LOGIC       *
+             *  use lblSUError.setText(); *
+             ******************************/
 
         }
     }
@@ -89,15 +90,17 @@ public class LogInController {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             } else {
 
-            /*************************
-             *  DISPLAY ERROR LOGIC  *
-             *************************/
+            /******************************
+             *  DISPLAY ERROR LOGIC       *
+             *  use lblSIError.setText(); *
+             ******************************/
 
             }
         }
