@@ -1,6 +1,7 @@
 package com.example.oopapplication;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class LogInController {
@@ -37,16 +39,39 @@ public class LogInController {
     @FXML
     private ChoiceBox<Integer> cmbYear;
 
+    @FXML
+    private ChoiceBox<String> cmbStatus;
+
     private boolean isSIMode = true;
     private Integer[] year = {1, 2, 3, 4};
+
+    private String[] status = {"Student", "Guest"};
 
     private boolean noErrors = false;
 
     public void initialize(){
         cmbYear.getItems().addAll(year);
+        cmbStatus.getItems().addAll(status);
+        cmbStatus.setOnAction(this::setText);
         anchorPaneSU.setVisible(false);
         anchorPaneCover.toFront();
+    }
 
+    public void setText(ActionEvent event){
+        if (Objects.equals(cmbStatus.getValue(), "Student")){
+            txtSUNumber.setPromptText("Student Number (20XX-XXXXX)...");
+            txtCourse.setVisible(true);
+            lblYear.setVisible(true);
+            cmbYear.setVisible(true);
+        }
+        else{
+            txtSUNumber.setPromptText("Guest Number...");
+            txtSUNumber.setText("");
+            cmbYear.setValue(null);
+            txtCourse.setVisible(false);
+            lblYear.setVisible(false);
+            cmbYear.setVisible(false);
+        }
     }
 
     public void toggleMode(){

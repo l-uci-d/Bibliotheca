@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="879.0" prefWidth="1307.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oopapplication.LogInController">
+<AnchorPane fx:id="anchorPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="879.0" prefWidth="1307.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oopapplication.LogInController">
    <children>
       <ImageView fx:id="imgViewBG" fitHeight="943.0" fitWidth="1570.0" layoutX="-131.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -41,7 +41,7 @@
                         <Font name="Montserrat Regular" size="41.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtSINumber" layoutX="117.0" layoutY="183.0" prefHeight="39.0" prefWidth="330.0" promptText="Student Number..." styleClass="input">
+                  <TextField fx:id="txtSINumber" layoutX="117.0" layoutY="183.0" prefHeight="39.0" prefWidth="330.0" promptText="Student Number/Guest ID..." styleClass="input">
                      <font>
                         <Font name="Montserrat Regular" size="20.0" />
                      </font>
@@ -72,7 +72,7 @@
                         <Font name="Montserrat Regular" size="41.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtSUNumber" layoutX="117.0" layoutY="93.0" prefHeight="39.0" prefWidth="330.0" promptText="Student Number..." styleClass="input">
+                  <TextField fx:id="txtSUNumber" layoutX="117.0" layoutY="93.0" prefHeight="39.0" prefWidth="330.0" promptText="Student Number (20XX-XXXXX)..." styleClass="input">
                      <font>
                         <Font name="Montserrat Regular" size="20.0" />
                      </font>
@@ -139,12 +139,12 @@
       </AnchorPane>
       <AnchorPane fx:id="anchorPaneCover" layoutX="654.0" layoutY="152.0" prefHeight="576.0" prefWidth="563.0" style="-fx-background-color: linear-gradient(to right, #5c6bc0, #512da8); -fx-border-color: none;" styleClass="pane">
          <children>
-            <Label fx:id="lblTitle" layoutX="73.0" layoutY="100.0" prefHeight="110.0" prefWidth="418.0" style="-fx-font-weight: bold;" text="app name logo etc." textFill="WHITE">
+            <Label fx:id="lblTitle" layoutX="73.0" layoutY="92.0" prefHeight="110.0" prefWidth="418.0" style="-fx-font-weight: bold;" text="app name logo etc." textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="41.0" />
                </font>
             </Label>
-            <Button fx:id="btnHeaderButton" layoutX="215.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#toggleMode" prefHeight="36.0" prefWidth="134.0" styleClass="hiddenbutton" text="BUTTON" textFill="WHITE">
+            <Button fx:id="btnHeaderButton" layoutX="215.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#toggleMode" prefHeight="36.0" prefWidth="134.0" styleClass="hiddenbutton" text="BUTTON" textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="19.0" />
                </font>
@@ -152,7 +152,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label fx:id="lblSubTitle" alignment="CENTER" layoutX="234.0" layoutY="236.0" prefHeight="33.0" prefWidth="96.0" text="text" textFill="WHITE">
+            <Label fx:id="lblSubTitle" alignment="CENTER" layoutX="234.0" layoutY="228.0" prefHeight="33.0" prefWidth="96.0" text="text" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat" size="27.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="cmbStatus" layoutX="299.0" layoutY="448.0" prefHeight="37.0" prefWidth="134.0" styleClass="input" />
+            <Label fx:id="lblSubTitle1" alignment="CENTER" layoutX="131.0" layoutY="450.0" prefHeight="33.0" prefWidth="156.0" text="I am a..." textFill="WHITE">
                <font>
                   <Font name="Montserrat" size="27.0" />
                </font>
