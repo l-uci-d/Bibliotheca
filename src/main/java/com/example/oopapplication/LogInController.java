@@ -82,21 +82,29 @@ public class LogInController {
     public void signIn(MouseEvent event) {
 
         if (!noErrors) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
-                Parent root = loader.load();
+            TranslateTransition dropdown = new TranslateTransition(Duration.seconds(1.0), anchorPaneMain1);
+            TranslateTransition dropdown1 = new TranslateTransition(Duration.seconds(1.0), anchorPaneCover);
+            dropdown.setByY(1000.0);
+            dropdown1.setByY(1000.0);
+            dropdown.play();
+            dropdown1.play();
+            dropdown.setOnFinished((event1) -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(this.getClass().getResource("mainmenu.fxml"));
+                    Parent root = (Parent)loader.load();
+                    Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            });
+        }
 
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+        else {
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            } else {
 
             /******************************
              *  DISPLAY ERROR LOGIC       *
