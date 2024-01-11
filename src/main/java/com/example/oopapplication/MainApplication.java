@@ -5,27 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.sql.*;
-
 import java.io.IOException;
 import java.util.Objects;
+import javax.swing.JOptionPane;
+
 
 public class MainApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene scene = new Scene(root);
-        stage.setTitle("Library app");
+        stage.setTitle("Bibliotheca");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
     }
 
     public static void main(String[] args) {
-        ConnectDB con = new ConnectDB();
-        Connection connection = con.Connect();
-
         launch();
     }
 }
