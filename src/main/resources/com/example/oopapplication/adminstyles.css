@@ -1,0 +1,145 @@
+
+.root{
+	-fx-font-family: 'Chiq Reduced';
+}
+
+
+.table-view {
+    -fx-background-color:  #e0ef9c;
+	-fx-font-size: 12.20;
+
+}
+
+
+
+.bg{
+	-fx-background-color: linear-gradient(to bottom, #3c0388, #5f2bec);
+	
+}
+
+
+.taskbar-buttons{
+	-fx-background-color: white;
+	-fx-border-color: black;
+	-fx-font-size: 20px;
+}
+
+
+.taskbar{
+	-fx-background-color: #e881d4;
+}
+
+
+.desktop-labels{
+	-fx-background-color: black;
+	-fx-effect: dropshadow(gaussian, rgba(255, 255, 255,0.5), -2,-2, -4, 5);	
+	-fx-font-size: 15px;
+	-fx-text-fill:white;
+}
+
+.taskbar-labels{
+	-fx-text-fill: darkblue;
+	-fx-font-size: 22px;
+	-fx-background-color: white;
+	-fx-border-color: darkblue;
+    -fx-font-family: 'Chiq Reduced';
+
+}
+
+.windows{
+	-fx-background-color: #393063;
+	-fx-effect: dropshadow(gaussian, rgba(236,104,158,0.5), -2,-2, -10, 10);
+	-fx-text-fill:#f9f6fd;
+
+}
+
+.windows-header{
+	-fx-font-family: 'VCR OSD Mono';
+	-fx-background-color: #ec689e;
+	-fx-text-fill: #f9f6fd;
+	-fx-font-size:24px;
+}
+
+.windows-label-headers{
+	-fx-text-fill: #f9f6fd;
+	-fx-font-size:24px;
+}
+
+.windows-label{
+	-fx-text-fill: #ec689e;
+	-fx-font-family: 'VCR OSD Mono';
+	-fx-font-size:20px;
+}
+
+.button-approve{
+	-fx-background-color: #a8fcff;
+	-fx-font-size: 18px;
+}
+
+.button-decline{
+	-fx-background-color:  #ec699c;
+	-fx-font-size: 18px;
+}
+
+.button-undo{
+	-fx-background-color:  #8da9fe;
+	-fx-font-size: 18px;
+}
+
+.button-edit{
+	-fx-background-color:  #c6b9fc;
+	-fx-font-size: 18px;
+}
+
+.button-save{
+	-fx-background-color: #aaf0b0;
+	-fx-font-size: 18px;	
+}
+
+.button-search{
+	-fx-background-color:  #fded8a;
+	-fx-font-size: 18px;	
+}
+
+
+
+.input{
+	-fx-background-color: #64d6bf;
+	-fx-font-size:16px;
+	-fx-pref-height : 35px;
+	-fx-min-height : 36px;
+}
+
+
+.input-editable{
+
+	-fx-background-color: transparent;
+    	-fx-border-color: #47f3dd;
+	-fx-border-radius: 14px;
+	-fx-font-size:16px;
+	-fx-text-fill: white;
+	-fx-pref-height : 35px;
+	-fx-min-height : 36px;
+	-fx-border-width: 1.5px;
+	
+}
+
+.input-uneditable{
+	-fx-background-color: transparent;
+	-fx-border-color: #eb509e;
+	-fx-text-fill: white;
+	-fx-font-size:16px;
+	-fx-pref-height : 35px;
+	-fx-min-height : 36px;
+	-fx-border-width: 1.5px;
+
+}
+
+
+
+
+.table-cell {
+    
+}
+
+

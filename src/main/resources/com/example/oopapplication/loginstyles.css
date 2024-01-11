@@ -1,0 +1,92 @@
+.root{
+	-fx-font-family: 'VCR OSD Mono';
+}
+
+
+
+.root{
+	-fx-font-family: 'VCR OSD Mono';
+	-fx-font-weight: bold;
+}
+
+
+
+.bg{
+	-fx-background-color: #4085d9;
+}
+
+.button {
+    -fx-background-color: #512da8;
+    -fx-text-fill: #fff;
+    -fx-padding: 10px 45px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-background-radius: 12px;
+    -fx-font-weight: 600;
+    -fx-letter-spacing: 0.5px;
+    -fx-text-transform: uppercase;
+    -fx-font-size: 20px;
+}
+
+
+.input{
+    -fx-background-color: transparent;
+    -fx-border-color: #733fe8;
+	-fx-border-radius: 14px;
+    -fx-padding: 5px 15px;
+    -fx-font-size: 20px;
+    -fx-background-radius: 12px;
+	-fx-prompt-text-fill: white;
+	-fx-text-fill: black;
+}
+
+
+.mainpane{
+    -fx-background-color :  transparent;
+    -fx-background-radius :  75 75 75 75;
+    -fx-border-color :  #733fe8;
+    -fx-border-radius :  75 75 75 75;
+    -fx-border-width :  5px;
+    -fx-padding: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(43,26,238, 0.3), 0,0, -20, 20);
+    -fx-text-fill: white;	
+
+
+}
+
+.subpane{
+    -fx-background-color: #5caef0;
+    -fx-background-radius :  75 75 75 75;
+    /* -fx-border-color :  #733fe8; */
+    -fx-border-radius :  75 75 75 75;
+    -fx-border-width :  3;
+    -fx-padding: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(43,26,238, 0.3), 0,0, -20, 20);
+}
+
+.hiddenbutton{
+    -fx-background-color: transparent;
+	-fx-text-fill :  #512da8;
+    -fx-background-radius: 12px;
+}
+
+
+
+.labels{
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}
+
+.warnings{
+	-fx-font-size: 25px;
+	-fx-fill: red;
+}
+
+
+.date-labels{
+	-fx-text-fill: darkblue;
+	-fx-font-size: 22px;
+
+    -fx-font-family: 'Chiq Reduced';
+
+}
