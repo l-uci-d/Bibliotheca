@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Normalizer;
-import java.time.DateTimeException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class InputValidation {
 
     // ----- 1.) validates name. may have upper, lowercase values, spaces, and special characters or accents. no numerals. has character limit
@@ -48,8 +48,8 @@ public class InputValidation {
         return matcher.matches();
     }
 
-    public static boolean isValidUserName(String username){
-        if((username.length() >= 30) || (username.length() <= 5))
+    public static boolean isValidUserName(String username) {
+        if ((username.length() >= 30) || (username.length() <= 5))
             return false;
 
         // Remove diacritics (accents) from the name
@@ -139,7 +139,7 @@ public class InputValidation {
 
 
     // ----- 8.) validates primary keys uniqueness
-    public static boolean isCodeUnique (String strCode, String strTableName, String strColumn){
+    public static boolean isCodeUnique(String strCode, String strTableName, String strColumn) {
         // Check if the code already exists in the specified column of the table
         String query = "SELECT COUNT(*) FROM " + strTableName + " WHERE " + strColumn + " = ?";
         try (Connection connection = new ConnectDB().Connect();
@@ -156,4 +156,21 @@ public class InputValidation {
             return false;
         }
     }
+
+
+    public static boolean isValidEmail(String email){
+        if ((email.length() >= 50) || (email.length() <= 5))
+            return false;
+
+        String normalized = Normalizer.normalize(email, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+
+
+        String regex = ".*@.*\\.com$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(normalized);
+
+        return matcher.matches();
+    }
+
 }

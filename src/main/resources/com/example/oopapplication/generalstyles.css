@@ -1,3 +1,8 @@
+
+			/********************************
+			 *	     BUTTONS 		*
+			 ********************************/
+
 .button-X{
 	-fx-background-color: #c74d73;
 	-fx-font-size: 20px;
@@ -39,32 +44,37 @@
 
 
 
+			/********************************
+			 *	DATE PICKER STYLES 	*
+			 ********************************/
+
 
 * {
-	-fx-primary-color: #eb509e;
-	-fx-secondary-color: #4B6EAF;
-	-fx-light-grey-color: #d1d1d1;
+	-fx-primary-color: #fded8a;
+	-fx-secondary-color: #64d6bf;
+	-fx-light-grey-color: #64d6bf;
     
 	-fx-focus-color: -fx-secondary-color;
 }
 
 .date-picker{
-	
+	-fx-border-color:#ec699c;
+	-fx-border-width: 1.5;
 }
 
 .date-picker .text-field{
-	-fx-background-color: transparent;
+	-fx-background-color: -fx-secondary-color;
+	-fx-font-size:16px;
+	
 	
 }
 .date-picker .arrow-button {
 	-fx-background-color: -fx-primary-color;
 
 }
-.date-picker .arrow-button:hover {
-	-fx-background-color: -fx-secondary-color;
-}
+
 .date-picker .arrow-button .arrow {
-	-fx-background-color: white;
+	-fx-background-color: #c6b9fc;
 }
 .date-picker .cell {
 	-fx-background-color: white;
@@ -100,13 +110,64 @@
 	-fx-background-color: white;
 }
 
-
-.combo-box:disabled  {
-    -fx-opacity: 1.0; 
-    -fx-text-fill: white;
-}
 	
 .date-picker:disabled{
 	-fx-opacity:1.0;
 -fx-text-fill: white;
 }
+
+
+			/********************************
+			 *	COMBOBOX STYLES 	*
+			 ********************************/
+
+.combo-box:disabled .text-field  {
+    	-fx-opacity: 1.0; 
+   	 -fx-text-fill: white;
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+}
+
+.combo-box .list-cell {
+    -fx-background: white;
+}
+
+.combo-box:editable{
+	-fx-border-color:#ec699c;
+}
+.combo-box .text-field{
+	-fx-border-color:#64d6bf;
+	-fx-border-width: 1.5;
+	-fx-background-color: #64d6bf;
+	-fx-background-radius: 14;
+}
+
+.combo-box .arrow-button .arrow {
+	-fx-background-color: #ec699c;
+}
+
+.combo-box .arrow-button {
+	-fx-background-color: transparent;
+}
+
+
+
+			/************************
+			 *	TAB STYLES 	*
+			 ************************/
+
+
+.tab {
+	-fx-background-color: #dd8af8;
+    	-fx-background-insets: 0 2 0 2;
+}
+
+.tab:selected {
+    	-fx-background-color: #8da9fe;
+}
+
+.tab-header-background {
+	-fx-background-color: #fdfdc2;
+}
+
+

@@ -1,6 +1,7 @@
 package com.example.oopapplication;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class ConnectDB {
     public Connection Connect() {
@@ -14,7 +15,6 @@ public class ConnectDB {
         }
         return con;
     }
-
 
 
 }
