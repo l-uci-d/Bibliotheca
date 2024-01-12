@@ -126,7 +126,11 @@ public class DataBaseMethods {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 txtArea.setText("Your " + status + " Book Reservations: \n");
-                rs.previous();
+                String Book_ID = rs.getString("Book_Id");
+                String Book_Title = rs.getString("Book_Title");
+                dataList.add(new TableModels.PendingBooks(null, Book_ID, Book_Title, null,
+                        null, null, null, null));
+                txtArea.appendText(Book_ID + " - " + Book_Title + "\n");
             }
             while(rs.next()){
                 String Book_ID = rs.getString("Book_Id");
