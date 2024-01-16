@@ -212,6 +212,4 @@ public class InputValidation {
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }
-
-
 }

@@ -305,7 +305,6 @@ public class HelperMethods {
         }
     }
 
-
     public static String conditionMaker(Map<String, String> filters) {
 
         StringBuilder query = new StringBuilder();
@@ -319,17 +318,6 @@ public class HelperMethods {
 
             query.setLength(query.length() - 5);
         }
-
         return query.toString();
-       }
-
-
-
-
-
-
-
-
-
-
+    }
 }

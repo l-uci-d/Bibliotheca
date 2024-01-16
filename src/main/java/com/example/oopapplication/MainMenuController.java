@@ -730,14 +730,7 @@ public class MainMenuController {
                         "\nAppointment Time: " + time));
                 refreshStudentTextAreas();
                 refreshTxtAreas();
-
             }
         }
-
     }
-
-
-
-
-
 }

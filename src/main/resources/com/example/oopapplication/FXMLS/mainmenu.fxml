@@ -183,7 +183,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="anchorPaneBooks" layoutX="270.0" layoutY="6.0" minWidth="714.0" prefHeight="773.0" prefWidth="965.0" styleClass="desktop-books">
+            <AnchorPane fx:id="anchorPaneBooks" layoutX="270.0" layoutY="6.0" minWidth="714.0" prefHeight="773.0" prefWidth="965.0" styleClass="desktop-books" visible="false">
                <children>
                   <AnchorPane fx:id="anchorPaneBooksHead" prefHeight="57.0" prefWidth="965.0" styleClass="desktop-books-header">
                      <children>

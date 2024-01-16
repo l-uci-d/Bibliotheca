@@ -67,7 +67,7 @@
                   <Label alignment="CENTER" layoutX="16.0" layoutY="109.0" prefHeight="30.0" prefWidth="127.0" styleClass="desktop-labels" text="View Account" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="anchorPaneBooks" layoutX="31.0" layoutY="20.0" minWidth="714.0" prefHeight="773.0" prefWidth="1032.0" styleClass="windows">
+            <AnchorPane fx:id="anchorPaneBooks" layoutX="31.0" layoutY="20.0" minWidth="714.0" prefHeight="773.0" prefWidth="1032.0" styleClass="windows" visible="false">
                <children>
                   <AnchorPane fx:id="anchorPaneBooksHeader" prefHeight="55.0" prefWidth="1032.0" styleClass="windows-header">
                      <children>
@@ -335,7 +335,7 @@
                   </TabPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="anchorPanePeople" layoutX="31.0" layoutY="20.0" prefHeight="773.0" prefWidth="1032.0" styleClass="windows">
+            <AnchorPane fx:id="anchorPanePeople" layoutX="31.0" layoutY="20.0" prefHeight="773.0" prefWidth="1032.0" styleClass="windows" visible="false">
                <children>
                   <AnchorPane prefHeight="55.0" prefWidth="1032.0" styleClass="windows-header">
                      <children>

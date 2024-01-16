@@ -100,12 +100,13 @@ public class TableModels {
 
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class PeopleInfo {
         private final StringProperty LastName, FirstName, Email, Gender, CP_Num, Address, BDay, Status;
 
-        public PeopleInfo(String lastName, String firstName, String email, String gender, String CP_Num, String address, String bDay, String status) {
+        public PeopleInfo(String lastName, String firstName, String email, String gender, String CP_Num, String address,
+                          String bDay, String status) {
             this.LastName = new SimpleStringProperty(lastName);
             this.FirstName = new SimpleStringProperty(firstName);
             this.Email = new SimpleStringProperty(email);
@@ -219,13 +220,14 @@ public class TableModels {
 
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Student extends PeopleInfo {
         private final StringProperty Student_No;
         private final StringProperty Course_Code;
 
-        public Student(String Student_No, String lastName, String firstName, String email, String gender, String Course_Code, String cpNumber, String address, String bDay, String status) {
+        public Student(String Student_No, String lastName, String firstName, String email, String gender,
+                       String Course_Code, String cpNumber, String address, String bDay, String status) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
             this.Student_No = new SimpleStringProperty(Student_No);
             this.Course_Code = new SimpleStringProperty(Course_Code);
@@ -261,13 +263,14 @@ public class TableModels {
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Employee extends PeopleInfo {
         private final StringProperty Employee_ID;
 
 
-        public Employee(String employeeID, String lastName, String firstName, String email, String gender, String cpNumber, String address, String bDay, String status) {
+        public Employee(String employeeID, String lastName, String firstName, String email, String gender,
+                        String cpNumber, String address, String bDay, String status) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
             this.Employee_ID = new SimpleStringProperty(employeeID);
         }
@@ -291,7 +294,8 @@ public class TableModels {
     public static class Guest extends PeopleInfo {
         private final StringProperty Guest_ID;
 
-        public Guest(String guestID, String lastName, String firstName, String email, String gender, String cpNumber, String address, String bDay, String status) {
+        public Guest(String guestID, String lastName, String firstName, String email, String gender, String cpNumber,
+                     String address, String bDay, String status) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
             this.Guest_ID = new SimpleStringProperty(guestID);
         }
@@ -306,13 +310,14 @@ public class TableModels {
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Users extends PeopleInfo {
         private final StringProperty User_ID, Username, Password, User_Type;
 
         public Users(String userID, String username, String password, String lastName, String firstName,
-                     String email, String gender, String cpNumber, String address, String bDay, String status, String userType) {
+                     String email, String gender, String cpNumber, String address, String bDay, String status,
+                     String userType) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
             this.User_ID = new SimpleStringProperty(userID);
             this.Username = new SimpleStringProperty(username);
@@ -338,8 +343,10 @@ public class TableModels {
 
         public String getUserType() {return User_Type.get();}
     }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static class PendingBooks {
         private final StringProperty Reservation_ID, Book_ID, Book_title, Student_No,
                 User_FirstName, User_LastName, Request_DateTime, Transaction_Status,
@@ -373,45 +380,32 @@ public class TableModels {
             return this.Reservation_ID;
         }
         public void setReservation_ID(String Reservation_ID) { this.Reservation_ID.set(Reservation_ID); }
-
         public StringProperty getBookIDProperty() {
             return this.Book_ID;
         }
-
         public StringProperty getBookTitleProperty() {
             return this.Book_title;
         }
-
         public StringProperty getStudent_NoProperty() {
             return this.Student_No;
         }
-
         public StringProperty getFirstNameProperty() {
             return this.User_FirstName;
         }
-
         public StringProperty getLastNameProperty() {
             return this.User_LastName;
         }
-
         public StringProperty getDateTimeProperty() {
             return this.Request_DateTime;
         }
-
-
-
         public void setTransaction_Status(String Transaction_Status) {this.Transaction_Status.set(Transaction_Status);}
-
         public StringProperty getApprover_DateTimePropertyBook( ){ return this.Approval_DateTime;}
-
-
         public void setApprover_ID(String Approver_ID) {
             this.Approver_ID.set(Approver_ID);
         }
         public void setApproval_DateTime(String Approval_DateTime) {
             this.Approval_DateTime.set(Approval_DateTime);
         }
-
         public String getApprover_ID() {
             return this.Approver_ID.get();
         }
@@ -423,65 +417,49 @@ public class TableModels {
 
         public String getReservation_ID() {
         return this.Reservation_ID.get();
-    }
+        }
         public String getTransaction_Status() {
         return this.Transaction_Status.get();
-    }
-
+        }
         public String getBook_ID() {
             return this.Book_ID.get();
         }
-
         public void setBook_ID(String Book_ID) {
             this.Book_ID.set(Book_ID);
         }
-
         public String getBook_title() {
             return this.Book_title.get();
         }
-
         public void setBook_title(String Book_title) {
             this.Book_title.set(Book_title);
         }
-
         public String getStudent_No() {
             return this.Student_No.get();
         }
-
         public void setStudent_No(String Student_No) {
             this.Student_No.set(Student_No);
         }
-
         public String getUser_FirstName() {
             return this.User_FirstName.get();
         }
-
         public void setUser_FirstName(String User_FirstName) {
             this.User_FirstName.set(User_FirstName);
         }
-
         public String getUser_LastName() {
             return this.User_LastName.get();
         }
-
         public void setUser_LastName(String User_LastName) {
             this.User_LastName.set(User_LastName);
         }
-
         public String getRequest_DateTime() {
             return this.Request_DateTime.get();
         }
-
         public void setRequest_DateTime(String Request_DateTime) {
             this.Request_DateTime.set(Request_DateTime);
         }
-
         public StringProperty getTransaction_StatusProperty() {
             return this.Transaction_Status;
-        }
-
-
-    }
+        }}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -508,38 +486,32 @@ public class TableModels {
         }
 
         public PendingAppts() {
-            this(null, null, null, null, null, null, null, null, null, null
+            this(null, null, null, null, null, null,
+                    null, null, null, null
             ,null);
         }
 
         public StringProperty getApptIDProperty() {
             return this.Appointment_ID;
         }
-
         public StringProperty getSlotIDProperty() {
             return this.Slot_ID;
         }
-
         public StringProperty getDateProperty() {
             return this.Date;
         }
-
         public StringProperty getDayProperty() {
             return this.Day;
         }
-
         public StringProperty getVisitor_IDProperty() {
             return this.Visitor_ID;
         }
-
         public StringProperty getFirstNameProperty() {
             return this.FirstName;
         }
-
         public StringProperty getLastNameProperty() {
             return this.LastName;
         }
-
         public StringProperty getDateTimeProperty() {
             return this.Request_DateTime;
         }
@@ -719,7 +691,9 @@ public class TableModels {
         }
 
         public CurrentBooks() {
-            this(null, null, null, null, null, null, null, null, null, null, null, null);
+            this(null, null, null, null,
+                    null, null, null, null, null,
+                    null, null, null);
         }
 
 
@@ -760,7 +734,6 @@ public class TableModels {
                 Target_Return_Date, Librarian_ID, Librarian_Remark,
                 Fine, isPaid;
 
-
         public PastBooks(String Reservation_ID, String Book_ID, String Book_title,
                          String Student_No, String User_FirstName, String User_LastName,
                          String Request_DateTime,
@@ -784,12 +757,11 @@ public class TableModels {
         }
 
 
-
         public PastBooks() {
             this( null, null, null, null,
-                    null, null, null, null, null, null,
-                    null, null, null, null, null, null, null
-            ,null, null);
+                    null, null, null, null, null,
+                    null,null, null, null, null,
+                    null, null, null,null, null);
 
         }
         public StringProperty getisPaidProperty(){ return this.isPaid; }
@@ -895,7 +867,7 @@ public class TableModels {
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class PastAppts extends CurrentAppts {
         private final StringProperty SY, Semester, Librarian_ID, Librarian_Remark, Approver_ID;
@@ -1081,8 +1053,6 @@ public class TableModels {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Courses extends College {
         private final StringProperty Course_Code;
 
@@ -1133,9 +1103,7 @@ public class TableModels {
             this.timeIn = new SimpleStringProperty(timeIn);
             this.timeOut = new SimpleStringProperty(timeOut);
             this.slotLimit = new SimpleIntegerProperty(SlotLimit);
-
         }
-
         public String getID() {
             return slotID.get();
         }
@@ -1183,9 +1151,7 @@ public class TableModels {
         public IntegerProperty getSlotLimitProperty() {
             return slotLimit;
         }
-
     }
-
     public static class Book {
         private final StringProperty bookId, description, author, publisher, datePublished,
                 isbn, status;
@@ -1286,15 +1252,4 @@ public class TableModels {
             };
         }
     }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 }
-
-
-
-
-
-

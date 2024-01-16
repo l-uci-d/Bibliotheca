@@ -844,5 +844,3 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
     }
 
 }
-
-

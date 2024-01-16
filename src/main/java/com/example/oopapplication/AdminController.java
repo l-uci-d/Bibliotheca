@@ -2353,6 +2353,4 @@ public class AdminController {
                     guest.getBDay(), guest.getStatus()) ;
         }
     }
-
-
 }

@@ -287,11 +287,7 @@ public class LogInController {
         signUptoCenter.setInterpolator(Interpolator.LINEAR);
         isSIMode = !isSIMode;
     }
-
     public void showPass(MouseEvent event) {
         showPassword(event);
     }
-
-
 }
-
