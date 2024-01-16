@@ -4,8 +4,10 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -25,10 +29,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.EventListener;
 import java.util.List;
 
-import static com.example.oopapplication.HelperMethods.showPassword;
-import static com.example.oopapplication.HelperMethods.updateDateTimeLabels;
+import static com.example.oopapplication.HelperMethods.*;
 
 
 public class LogInController {
@@ -56,22 +60,6 @@ public class LogInController {
     public LogInController() {
     }
 
-    public void setCurrentDateTime(LocalDateTime currentDateTime) {
-        if (currentDateTime != null)
-            this.currentDateTime = currentDateTime;
-        else
-            this.currentDateTime = LocalDateTime.now();
-    }
-
-    public LocalTime getCurrentTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedTime = this.currentDateTime.format(formatter);
-        return LocalTime.parse(formattedTime, formatter);
-    }
-
-    public LocalDate getCurrentDate() {
-        return this.currentDateTime.toLocalDate();
-    }
 
     public String getCurrentSYSEM(String choice) {
         if (choice.equals("Sem"))
@@ -88,16 +76,15 @@ public class LogInController {
     }
 
     public void initialize() {//////////////////////////////////////////////////////////////////////////////////////
-
-        setCurrentDateTime(null);
+        if(getCurrentDateTime() == null)
+            setCurrentDateTime(null);
         System.out.println(currentDateTime);
         System.out.println(getCurrentTime());
         System.out.println(getCurrentDate());
 
-        adminController.setCurrentDateTime(currentDateTime);
         setCurrentSYSEM();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateDateTimeLabels(lblClock, lblDate, null)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateDateTimeLabels(lblClock, lblDate, null, getCurrentDateTime())));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
@@ -179,7 +166,11 @@ public class LogInController {
 
     }
 
-    public void signIn(MouseEvent event) {//////////////////////////////////////////////////////////////////////////////////////
+    public void signInKey(KeyEvent event){
+        if (event.getCode() == KeyCode.ENTER)
+            signIn(event);
+    }
+    public void signIn(Event event) {//////////////////////////////////////////////////////////////////////////////////////
         if (lblShow.getText().equals("Hide"))
             passSi.setText(txtPass.getText());
         else
@@ -198,13 +189,13 @@ public class LogInController {
                     dropdown1.setByY(-1000.0);
                     dropdown.setOnFinished((event1) -> {
                         try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("adminmainmenu.fxml"));
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLS/adminmainmenu.fxml"));
                             Parent root = loader.load();
                             AdminController adminController = loader.getController();
 
                             adminController.setUserID(txtSINumber.getText());
 
-                            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                            Stage stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
 
                             Scene scene = new Scene(root);
                             stage.setTitle("Bibliotheca | Admin");
@@ -219,19 +210,20 @@ public class LogInController {
                 } else {         //if not admin
                     dropdown.setByY(1000.0);
                     dropdown1.setByY(1000.0);
+
                     dropdown.setOnFinished((event1) -> {
                         try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
+
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLS/mainmenu.fxml"));
                             Parent root = loader.load();
                             MainMenuController mainMenuController = loader.getController();
 
                             mainMenuController.setUserType(usertype);
                             mainMenuController.setUserID(txtSINumber.getText());
                             mainMenuController.setCurrentSYSEM();
-                            mainMenuController.setCurrentDateTime(currentDateTime);
 
 
-                            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                             Scene scene = new Scene(root);
                             stage.setTitle("Bibliotheca | User");
                             stage.setScene(scene);
@@ -246,6 +238,7 @@ public class LogInController {
                 }
                 dropdown.play();
                 dropdown1.play();
+                showInfo(info,"Successful Log in", "Successfully logged in, please wait.");
                 //
             } else lblSIError.setText("Incorrect password or username.");       // wrong password
 

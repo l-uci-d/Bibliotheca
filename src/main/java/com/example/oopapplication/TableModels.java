@@ -264,82 +264,91 @@ public class TableModels {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Employee extends PeopleInfo {
-        private final StringProperty employeeID;
+        private final StringProperty Employee_ID;
+
 
         public Employee(String employeeID, String lastName, String firstName, String email, String gender, String cpNumber, String address, String bDay, String status) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
-            this.employeeID = new SimpleStringProperty(employeeID);
+            this.Employee_ID = new SimpleStringProperty(employeeID);
+        }
+        public Employee() {
+            this(null, null, null, null, null, null, null, null, null);
         }
 
-        public StringProperty getEmployeeIDProperty() {
-            return employeeID;
+        public void setEmployee_ID(String Employee_ID) {
+            this.Employee_ID.set(Employee_ID);
         }
-        public String  getEmployeeID() {
-            return employeeID.get();
+        public StringProperty getEmployeeIDProperty() {
+            return Employee_ID;
+        }
+        public String getEmployeeID() {
+            return Employee_ID.get();
         }
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Guest extends PeopleInfo {
-        private final StringProperty guestID;
+        private final StringProperty Guest_ID;
 
         public Guest(String guestID, String lastName, String firstName, String email, String gender, String cpNumber, String address, String bDay, String status) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
-            this.guestID = new SimpleStringProperty(guestID);
+            this.Guest_ID = new SimpleStringProperty(guestID);
         }
+    public Guest() {
+        this(null, null, null, null, null, null, null, null, null);
+    }
 
-        public StringProperty getGuestIDProperty() {
-            return guestID;
-        }
-        public String  getGuestID() {
-            return guestID.get();
+        public void setGuest_ID(String Guest_ID) {this.Guest_ID.set(Guest_ID);
+    }
+        public StringProperty getGuestIDProperty() {return Guest_ID;}
+        public String getGuestID() {return Guest_ID.get();
         }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class Users extends PeopleInfo {
-        private final StringProperty userID, username, password, userType;
+        private final StringProperty User_ID, Username, Password, User_Type;
 
         public Users(String userID, String username, String password, String lastName, String firstName,
                      String email, String gender, String cpNumber, String address, String bDay, String status, String userType) {
             super(lastName, firstName, email, gender, cpNumber, address, bDay, status);
-            this.userID = new SimpleStringProperty(userID);
-            this.username = new SimpleStringProperty(username);
-            this.password = new SimpleStringProperty(password);
-            this.userType = new SimpleStringProperty(userType);
+            this.User_ID = new SimpleStringProperty(userID);
+            this.Username = new SimpleStringProperty(username);
+            this.Password = new SimpleStringProperty(password);
+            this.User_Type = new SimpleStringProperty(userType);
         }
 
-        public StringProperty getUserIDProperty() {
-            return userID;
-        }
+        public void setUser_ID(String User_ID) {this.User_ID.set(User_ID);}
+        public void setUsername(String Username) {this.Username.set(Username);}
+        public void setPassword(String Password) {this.Password.set(Password);}
+        public void setUser_Type(String User_Type) {this.User_Type.set(User_Type);}
+        public StringProperty getUserIDProperty() {return User_ID;}
 
-        public StringProperty getUsernameProperty() {
-            return username;
-        }
+        public StringProperty getUsernameProperty() {return Username;}
 
-        public StringProperty getPasswordProperty() {
-            return password;
-        }
+        public StringProperty getPasswordProperty() {return Password;}
 
-        public StringProperty getUserTypeProperty() {
-            return userType;
-        }
+        public StringProperty getUserTypeProperty() {return User_Type;}
+        public String getUserID() {return User_ID.get();}
+
+        public String getUsername() {return Username.get();}
+        public String getPassword() {return Password.get();}
+
+        public String getUserType() {return User_Type.get();}
     }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class PendingBooks {
         private final StringProperty Reservation_ID, Book_ID, Book_title, Student_No,
-                User_FirstName, User_LastName, Request_DateTime, Transaction_Status;
+                User_FirstName, User_LastName, Request_DateTime, Transaction_Status,
+                Approver_ID , Approval_DateTime;
 
         public PendingBooks(String Reservation_ID, String Book_ID, String Book_title,
                             String Student_No, String User_FirstName, String User_LastName,
-                            String Request_DateTime, String Transaction_Status) {
+                            String Request_DateTime, String Transaction_Status, String Approver_ID,
+                            String Approval_DateTime) {
             this.Reservation_ID = new SimpleStringProperty(Reservation_ID);
             this.Book_ID = new SimpleStringProperty(Book_ID);
             this.Book_title = new SimpleStringProperty(Book_title);
@@ -348,16 +357,22 @@ public class TableModels {
             this.User_LastName = new SimpleStringProperty(User_LastName);
             this.Request_DateTime = new SimpleStringProperty(Request_DateTime);
             this.Transaction_Status = new SimpleStringProperty(Transaction_Status);
+            this.Approver_ID = new SimpleStringProperty(Approver_ID);
+            this.Approval_DateTime = new SimpleStringProperty(Approval_DateTime);
 
         }
 
         public PendingBooks() {
-            this(null, null, null, null, null, null, null, null);
+            this(null, null, null,
+                    null, null, null,
+                    null, null, null,
+                    null);
         }
 
         public StringProperty getReservationIDProperty() {
             return this.Reservation_ID;
         }
+        public void setReservation_ID(String Reservation_ID) { this.Reservation_ID.set(Reservation_ID); }
 
         public StringProperty getBookIDProperty() {
             return this.Book_ID;
@@ -383,21 +398,35 @@ public class TableModels {
             return this.Request_DateTime;
         }
 
-        public String getTransaction_Status() {
-            return this.Transaction_Status.get();
+
+
+        public void setTransaction_Status(String Transaction_Status) {this.Transaction_Status.set(Transaction_Status);}
+
+        public StringProperty getApprover_DateTimePropertyBook( ){ return this.Approval_DateTime;}
+
+
+        public void setApprover_ID(String Approver_ID) {
+            this.Approver_ID.set(Approver_ID);
+        }
+        public void setApproval_DateTime(String Approval_DateTime) {
+            this.Approval_DateTime.set(Approval_DateTime);
         }
 
-        public void setTransaction_Status(String Transaction_Status) {
-            this.Transaction_Status.set(Transaction_Status);
+        public String getApprover_ID() {
+            return this.Approver_ID.get();
+        }
+        public StringProperty getApprover_IDProperty() {
+            return this.Approver_ID;
+        }
+        public String getApproval_DateTime(String Approval_DateTime) { return this.Approval_DateTime.get();
         }
 
         public String getReservation_ID() {
-            return this.Reservation_ID.get();
-        }
-
-        public void setReservation_ID(String reservation_ID) {
-            this.Reservation_ID.set(reservation_ID);
-        }
+        return this.Reservation_ID.get();
+    }
+        public String getTransaction_Status() {
+        return this.Transaction_Status.get();
+    }
 
         public String getBook_ID() {
             return this.Book_ID.get();
@@ -453,18 +482,18 @@ public class TableModels {
 
 
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class PendingAppts {
         private final StringProperty Appointment_ID, Slot_ID, Date, Day, Visitor_ID,
-                FirstName, LastName, Request_DateTime, Transaction_Status;
+                FirstName, LastName, Request_DateTime, Transaction_Status, Approver_ID,
+                Approval_DateTime;
 
         public PendingAppts(String Appointment_ID, String Slot_ID, String Date, String Day,
                             String Visitor_ID, String firstName, String lastName,
-                            String request_DateTime, String Transaction_Status) {
+                            String request_DateTime, String Transaction_Status,
+                            String Approver_ID, String Approval_DateTime) {
             this.Appointment_ID = new SimpleStringProperty(Appointment_ID);
             this.Slot_ID = new SimpleStringProperty(Slot_ID);
             this.Date = new SimpleStringProperty(Date);
@@ -474,10 +503,13 @@ public class TableModels {
             this.LastName = new SimpleStringProperty(lastName);
             this.Request_DateTime = new SimpleStringProperty(request_DateTime);
             this.Transaction_Status = new SimpleStringProperty(Transaction_Status);
+            this.Approver_ID = new SimpleStringProperty(Approver_ID);
+            this.Approval_DateTime = new SimpleStringProperty(Approval_DateTime);
         }
 
         public PendingAppts() {
-            this(null, null, null, null, null, null, null, null, null);
+            this(null, null, null, null, null, null, null, null, null, null
+            ,null);
         }
 
         public StringProperty getApptIDProperty() {
@@ -516,14 +548,30 @@ public class TableModels {
             return this.Transaction_Status;
         }
 
-
         public String getAppointment_ID() {
             return this.Appointment_ID.get();
         }
 
+        public StringProperty getApproval_DateTimeProperty(){ return this.Approval_DateTime;
+        }
+
+    public StringProperty getApprover_IDPropertyAppts(){return this.Approver_ID;}
+
         public void setAppointment_ID(String Appointment_ID) {
             this.Appointment_ID.set(Appointment_ID);
         }
+        public void setApprover_ID(String approverId) { this.Approver_ID.set(approverId);
+        }
+        public void setApproval_DateTime(String Approver_DateTime) {
+            this.Approval_DateTime.set(Approver_DateTime);
+        }
+        public String getApprover_ID( ) { return this.Approver_ID.get(); }
+        public StringProperty getApprover_DateTimeProperty() {
+        return this.Approval_DateTime;
+    }
+        public String getApproval_DateTime( ) {
+        return this.Approval_DateTime.get();
+    }
 
         public String getSlot_ID() {
             return this.Slot_ID.get();
@@ -592,7 +640,7 @@ public class TableModels {
     }
 
     public static class CurrentAppts extends PendingAppts {
-        private final StringProperty Time_In, Time_Out, Approval_DateTime;
+        private final StringProperty Time_In, Time_Out;
 
 
         public CurrentAppts(
@@ -605,19 +653,21 @@ public class TableModels {
                 String lastName,
                 String Transaction_Status,
                 String Request_DateTime,
-                String timeIn, String timeOut, String Approval_DateTime) {
+                String timeIn, String timeOut,
+                String Approver_ID,
+                String Approval_DateTime) {
             super(Appointment_ID, Slot_ID, Date, Day,
                     Visitor_ID, firstName, lastName,
-                    Request_DateTime, Transaction_Status);
+                    Request_DateTime, Transaction_Status, Approver_ID, Approval_DateTime);
             Time_In = new SimpleStringProperty(timeIn);
             Time_Out = new SimpleStringProperty(timeOut);
-            this.Approval_DateTime = new SimpleStringProperty(Approval_DateTime);
         }
 
         CurrentAppts() {
             this(null, null, null, null,
                     null, null, null, null,
-                    null, null, null, null);
+                    null, null, null, null, null
+            );
         }
 
         public StringProperty getTime_InProperty() {
@@ -628,9 +678,6 @@ public class TableModels {
             return this.Time_Out;
         }
 
-        public StringProperty getApproval_DateTimeProperty() {
-            return this.Approval_DateTime;
-        }
 
         public String getTime_In() {
             return this.Time_In.get();
@@ -647,18 +694,10 @@ public class TableModels {
         public void setTime_Out(String Time_Out) {
             this.Time_Out.set(Time_Out);
         }
-
-        public String getApproval_DateTime() {
-            return this.Approval_DateTime.get();
-        }
-
-        public void setApproval_DateTime(String Approval_DateTime) {
-            this.Approval_DateTime.set(Approval_DateTime);
-        }
     }
 
     public static class CurrentBooks extends PendingBooks {
-        private final StringProperty Date_Reserved, Target_Return_Date, Approval_DateTime;
+        private final StringProperty Date_Reserved, Target_Return_Date;
 
         public CurrentBooks(String Reservation_ID,
                             String Book_ID,
@@ -668,21 +707,22 @@ public class TableModels {
                             String User_LastName,
                             String Request_DateTime,
                             String dateReserved,
-                            String targetReturnDate, String Transaction_Status, String Approval_DateTime) {
+                            String targetReturnDate, String Transaction_Status,
+                            String Approver_ID,
+                            String Approval_DateTime) {
             super(Reservation_ID, Book_ID, Book_title, Student_No,
-                    User_FirstName, User_LastName, Request_DateTime, Transaction_Status);
-            Date_Reserved = new SimpleStringProperty(dateReserved);
+                    User_FirstName, User_LastName, Request_DateTime, Transaction_Status,
+                    Approver_ID, Approval_DateTime);
             Target_Return_Date = new SimpleStringProperty(targetReturnDate);
-            this.Approval_DateTime = new SimpleStringProperty(Approval_DateTime);
+            Date_Reserved = new SimpleStringProperty(dateReserved);
+
         }
 
         public CurrentBooks() {
-            this(null, null, null, null, null, null, null, null, null, null, null);
+            this(null, null, null, null, null, null, null, null, null, null, null, null);
         }
 
-        public StringProperty getApproval_DateTimeProperty() {
-            return this.Approval_DateTime;
-        }
+
 
         public StringProperty getDate_ReservedProperty() {
             return this.Date_Reserved;
@@ -696,13 +736,8 @@ public class TableModels {
             this.Date_Reserved.set(Date_Reserved);
         }
 
-        public String getApproval_DateTime() {
-            return this.Approval_DateTime.get();
-        }
 
-        public void setApproval_DateTime(String Approval_DateTime) {
-            this.Approval_DateTime.set(Approval_DateTime);
-        }
+
 
         public StringProperty getTarget_Return_DateProperty() {
             return this.Target_Return_Date;
@@ -722,8 +757,8 @@ public class TableModels {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class PastBooks extends PendingBooks {
         private final StringProperty SY, Semester, Date_Reserved, Date_Returned,
-                Target_Return_Date, Librarian_ID, Librarian_Remark, Approval_DateTime,
-                Approver_ID, Fine, isPaid;
+                Target_Return_Date, Librarian_ID, Librarian_Remark,
+                Fine, isPaid;
 
 
         public PastBooks(String Reservation_ID, String Book_ID, String Book_title,
@@ -731,11 +766,12 @@ public class TableModels {
                          String Request_DateTime,
                          String sy, String semester, String dateReserved,
                          String dateReturned, String targetReturnDate, String Transaction_Status,
-                         String librarianId, String librarianRemark, String approvalDateTime,
-                         String approverId, String fine, String isPaid
+                         String librarianId, String librarianRemark, String fine, String isPaid,  String Approver_ID,
+                         String Approval_DateTime
         ) {
             super(Reservation_ID, Book_ID, Book_title, Student_No,
-                    User_FirstName, User_LastName, Request_DateTime, Transaction_Status);
+                    User_FirstName, User_LastName, Request_DateTime, Transaction_Status,
+                    Approver_ID, Approval_DateTime);
             this.SY = new SimpleStringProperty(sy);
             this.Semester = new SimpleStringProperty(semester);
             this.Date_Reserved = new SimpleStringProperty(dateReserved);
@@ -743,8 +779,6 @@ public class TableModels {
             this.Target_Return_Date = new SimpleStringProperty(targetReturnDate);
             this.Librarian_ID = new SimpleStringProperty(librarianId);
             this.Librarian_Remark = new SimpleStringProperty(librarianRemark);
-            this.Approval_DateTime = new SimpleStringProperty(approvalDateTime);
-            this.Approver_ID = new SimpleStringProperty(approverId);
             this.Fine = new SimpleStringProperty(fine);
             this.isPaid = new SimpleStringProperty(isPaid);
         }
@@ -752,10 +786,10 @@ public class TableModels {
 
 
         public PastBooks() {
-            this(null, null, null, null, null, null,
+            this( null, null, null, null,
                     null, null, null, null, null, null,
                     null, null, null, null, null, null, null
-            );
+            ,null, null);
 
         }
         public StringProperty getisPaidProperty(){ return this.isPaid; }
@@ -786,14 +820,6 @@ public class TableModels {
 
         public StringProperty getLibrarian_RemarkProperty() {
             return this.Librarian_Remark;
-        }
-
-        public StringProperty getApproval_DateTimeProperty() {
-            return this.Approval_DateTime;
-        }
-
-        public StringProperty getApprover_IDProperty() {
-            return this.Approver_ID;
         }
 
         public StringProperty getFineProperty() {
@@ -859,21 +885,6 @@ public class TableModels {
             this.Librarian_Remark.set(Librarian_Remark);
         }
 
-        public String getApproval_DateTime() {
-            return this.Approval_DateTime.get();
-        }
-
-        public void setApproval_DateTime(String Approval_DateTime) {
-            this.Approval_DateTime.set(Approval_DateTime);
-        }
-
-        public String getApprover_ID() {
-            return this.Approver_ID.get();
-        }
-
-        public void setApprover_ID(String Approver_ID) {
-            this.Approver_ID.set(Approver_ID);
-        }
 
         public String getFine() {
             return this.Fine.get();
@@ -906,7 +917,7 @@ public class TableModels {
                          String Request_DateTime,
                          String timeIn, String timeOut, String Approval_DateTime) {
             super(Appointment_ID, Slot_ID, Date, Day, Visitor_ID, firstName, lastName, Transaction_Status,
-                    Request_DateTime, timeIn, timeOut, Approval_DateTime);
+                    Request_DateTime, timeIn, timeOut, Approver_ID, Approval_DateTime);
             this.SY = new SimpleStringProperty(sy);
             this.Semester = new SimpleStringProperty(semester);
             this.Librarian_ID = new SimpleStringProperty(librarianId);

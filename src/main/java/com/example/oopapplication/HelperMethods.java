@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,18 +30,65 @@ public class HelperMethods {
     public static Alert error = new Alert(Alert.AlertType.ERROR);
     public static TextInputDialog input = new TextInputDialog();
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void updateDateTimeLabels(Label lblClock, Label lblDate, Label lblDay) {
-        LocalDateTime now = LocalDateTime.now();
+    private static LocalDateTime currentDateTime = LocalDateTime.now();
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-        String dayOfWeek = now.getDayOfWeek().toString();
+    public static LocalDateTime getCurrentDateTime() {
+        return currentDateTime;
+    }
+
+    public static void setCurrentDateTime(LocalDateTime localDateTime) {
+        if (localDateTime != null) {
+            currentDateTime = localDateTime;
+        } else {
+            currentDateTime = LocalDateTime.now();
+        }
+    }
+
+    public static void setCurrentDate(LocalDate currentDate) {
+        if (currentDate != null) {
+            currentDateTime = currentDateTime.withYear(currentDate.getYear())
+                    .withMonth(currentDate.getMonthValue())
+                    .withDayOfMonth(currentDate.getDayOfMonth());
+        } else {
+            currentDateTime = currentDateTime.with(LocalDate.now());
+        }
+    }
+
+    public static void setCurrentTime(LocalTime currentTime) {
+        if (currentTime != null) {
+            currentDateTime = currentDateTime.withHour(currentTime.getHour())
+                    .withMinute(currentTime.getMinute())
+                    .withSecond(currentTime.getSecond())
+                    .withNano(currentTime.getNano());
+        } else {
+            currentDateTime = currentDateTime.with(LocalTime.now());
+        }
+    }
+
+        public static LocalDate getCurrentDate() {
+            return currentDateTime.toLocalDate();
+        }
+
+        public static LocalTime getCurrentTime() {
+            return currentDateTime.toLocalTime();
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void updateDateTimeLabels(Label lblClock, Label lblDate, Label lblDay, LocalDateTime  Time) {
+
+        String dayOfWeek = Time.getDayOfWeek().toString();
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedTime = now.format(timeFormatter);
+        String formattedTime = Time.format(timeFormatter);
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = now.format(dateFormatter);
+        String formattedDate = Time.format(dateFormatter);
 
         lblClock.setText(formattedTime);
         if (lblDay != null) {
@@ -64,31 +112,15 @@ public class HelperMethods {
         return DayOfWeek.from(formatter.parse(dayAbbreviation));
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static void addToolTip(Button button) {
-        Tooltip tooltip = new Tooltip("Clear selection first.");
-
-        button.setOnMouseEntered(event -> {
-            if (button.isDisabled()) {
-                Tooltip.install(button, tooltip);
-            }
-        });
-
-        button.setOnMouseExited(event -> Tooltip.uninstall(button, tooltip));
-    }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     public static ButtonType showAlert(Alert alert, String title, String contentText) {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(contentText);
-        return alert.showAndWait().orElse(ButtonType.CANCEL);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.orElse(ButtonType.CANCEL);
     }
 
     public static Optional<ButtonType> showInfo(Alert alert, String title, String contentText) {
@@ -110,23 +142,20 @@ public class HelperMethods {
         textArea.setEditable(false);
         textArea.setWrapText(true);
         textArea.setText(contentText + String.join("\n", books));
-
-
         GridPane grid = new GridPane();
         grid.add(textArea, 0, 0);
-
         dialog.getDialogPane().setContent(grid);
-
-        // Add buttons to the dialog (e.g., OK button)
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
-
-        // Show the dialog and wait for user response
         Optional<ButtonType> result = dialog.showAndWait();
-
-        // Handle the result as needed (e.g., perform actions based on user input)
 
         return result;
     }
+
+    public static String showInput(String title){
+        input.setHeaderText(title);
+            return input.showAndWait().get();
+    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

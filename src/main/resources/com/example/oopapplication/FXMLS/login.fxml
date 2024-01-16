@@ -41,8 +41,8 @@
                   </TextField>
                   <Group layoutX="117.0" layoutY="268.0">
                      <children>
-                        <PasswordField fx:id="passSi" prefHeight="39.0" prefWidth="330.0" promptText="Password..." styleClass="input" />
-                        <TextField fx:id="txtPass" prefHeight="39.0" prefWidth="330.0" promptText="Password..." styleClass="input" visible="false" />
+                        <PasswordField fx:id="passSi" onKeyPressed="#signInKey" prefHeight="39.0" prefWidth="330.0" promptText="Password..." styleClass="input" />
+                        <TextField fx:id="txtPass" onKeyPressed="#signInKey" prefHeight="39.0" prefWidth="330.0" promptText="Password..." styleClass="input" visible="false" />
                         <Label fx:id="lblShow" layoutX="287.0" layoutY="13.0" onMouseClicked="#showPass" text="Show" underline="true" />
                      </children>
                   </Group>
@@ -128,7 +128,7 @@
       <String fx:value="root" />
    </styleClass>
    <stylesheets>
-      <URL value="@fontstyles.css" />
-      <URL value="@loginstyles.css" />
+      <URL value="@../CSS/fontstyles.css" />
+      <URL value="@../CSS/loginstyles.css" />
    </stylesheets>
 </AnchorPane>

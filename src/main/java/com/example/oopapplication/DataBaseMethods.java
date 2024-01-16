@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -41,7 +42,7 @@ public class DataBaseMethods {
         return a;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void populateCmbBox(String tableName, String columnName, ComboBox<String> comboBox) {
         String q = "SELECT DISTINCT " + columnName + " FROM " + tableName;
@@ -61,7 +62,7 @@ public class DataBaseMethods {
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static String getUserIDColumnName(String tblCol) {
         if (tblCol.equals("Student"))
@@ -98,6 +99,21 @@ public class DataBaseMethods {
         return count;
     }
 
+    public static int getIntCount(String tbl, String input, String colName, String extra) {
+        int count = 0;
+        String q = "SELECT COUNT(*) AS recordcount FROM " + tbl + " WHERE " + colName  + input  + extra + ";";
+        try (Connection conn = new ConnectDB().Connect();
+             PreparedStatement ps = conn.prepareStatement(q)) {
+            ResultSet rs = ps.executeQuery();
+            //System.out.println(ps);
+            if (rs.next())
+                count = rs.getInt("recordcount");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return count;
+    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static int getCountLike(String tbl, String input, String colName, String extra) {
@@ -114,36 +130,6 @@ public class DataBaseMethods {
         return count;
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static void getBookTransacts(String tblName, String status, String ID, ObservableList<TableModels.PendingBooks> dataList, TextArea txtArea){
-        String q = "SELECT * FROM " + tblName + " WHERE Student_NO = ? AND Transaction_Status = ?;";
-        try (Connection conn = new ConnectDB().Connect();
-             PreparedStatement ps = conn.prepareStatement(q)) {
-            ps.setString(1, ID);
-            ps.setString(2, status);
-            System.out.println(ps);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                txtArea.setText("Your " + status + " Book Reservations: \n");
-                String Book_ID = rs.getString("Book_Id");
-                String Book_Title = rs.getString("Book_Title");
-                dataList.add(new TableModels.PendingBooks(null, Book_ID, Book_Title, null,
-                        null, null, null, null));
-                txtArea.appendText(Book_ID + " - " + Book_Title + "\n");
-            }
-            while(rs.next()){
-                String Book_ID = rs.getString("Book_Id");
-                String Book_Title = rs.getString("Book_Title");
-                dataList.add(new TableModels.PendingBooks(null, Book_ID, Book_Title, null,
-                        null, null, null, null));
-                txtArea.appendText(Book_ID + " - " + Book_Title + "\n");
-            }
-        }
-        catch(SQLException e){
-            System.out.println(e);
-        }
-    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static String getNextID(String tblName, String colName, int rowNumber, String bookID) {
@@ -185,7 +171,7 @@ public class DataBaseMethods {
             int numericPart = Integer.parseInt(numericPartStr);
             numericPart++;
 
-            String formattedNumericPart = String.format("%03d", numericPart);  // Assuming you want 3 digits with leading zeros
+            String formattedNumericPart = String.format("%03d", numericPart);
             return nonNumericPart + formattedNumericPart;
         }
     }
@@ -198,8 +184,8 @@ public class DataBaseMethods {
         try (Connection conn = new ConnectDB().Connect();
              PreparedStatement ps = conn.prepareStatement(q)) {
             ps.setString(1, ID);
-            //System.out.println(ps);
-            //ps.executeUpdate();
+            System.out.println(ps);
+            ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -226,8 +212,8 @@ public class DataBaseMethods {
                     ps.setObject(parameterIndex++, value);
                 }
             }
-            //System.out.println(ps);
-            //ps.executeUpdate();
+            System.out.println(ps);
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -264,7 +250,7 @@ public class DataBaseMethods {
                 for (int i = 0; i < colNames.size(); i++) {
                     setParameter(preparedStatement, i + 1, newVals.get(i));
                 }
-                //System.out.println(preparedStatement);
+                System.out.println(preparedStatement);
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -274,7 +260,7 @@ public class DataBaseMethods {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public static void updateDB(String tblName, List<String> colNames, List<String> newVals, String colPk, String pk) {
+public static void updateDB(String tblName, List<String> colNames, List<String> newVals, String colPk, String pk, String conditions) {
     StringBuilder q = new StringBuilder("UPDATE " + tblName +
             " SET ");
 
@@ -283,10 +269,9 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
             q.append(colName).append("= ?, ");
         }
         q.setLength(q.length() - 2);
-        q.append(" WHERE " + colPk + " = ?");
+        q.append(" WHERE " + colPk + " = ? " + conditions);
 
     }
-
     //System.out.println(q);
     try {
         try (PreparedStatement preparedStatement = conn.prepareStatement(q.toString())) {
@@ -294,20 +279,15 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
                 setParameter(preparedStatement, i + 1, newVals.get(i));
             }
             preparedStatement.setString(colNames.size() + 1, pk);
-            //System.out.println(preparedStatement);
+            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
 }
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     private static void setParameter(PreparedStatement preparedStatement, int index, Object value) throws SQLException {
         if (value instanceof String) {
             preparedStatement.setString(index, (String) value);
@@ -346,38 +326,29 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
         try (Connection conn = new ConnectDB().Connect();
              PreparedStatement ps = conn.prepareStatement(q)) {
             ResultSet rs = ps.executeQuery();
+            System.out.println(ps);
 
-            while (rs.next()) {
-                T instance = modelClass.getDeclaredConstructor().newInstance();
-                //System.out.println(instance);
+                while (rs.next()) {
+                    T instance = modelClass.getDeclaredConstructor().newInstance();
 
-
-                for (String colName : colNames) {
-                    String methodName = "set" + colName;
-                    Method method = modelClass.getMethod(methodName, String.class);
-                    method.invoke(instance, rs.getString(colName));
-                    //System.out.print(" " + colName + ": " + rs.getString(colName) + " ");
-                }
-
-
+                    for (String colName : colNames) {
+                        String methodName = "set" + colName;
+                        Method method = modelClass.getMethod(methodName, String.class);
+                        method.invoke(instance, rs.getString(colName));
+                    }
                 dataList.add(instance);
-                // System.out.println("DataList size: " + dataList.size());
-                //System.out.println(dataList);
             }
-            table.getItems().clear();
-            table.setItems(FXCollections.observableArrayList(dataList));
-            table.refresh();
-             //System.out.println("Setted the datalist into the table!!!");
+
+            if(table != null){
+                table.getItems().clear();
+                table.setItems(FXCollections.observableArrayList(dataList));
+                table.refresh();
+                }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    public void setDateTime() {
-
-    }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public String currentSYSEM(String choice) {
@@ -422,6 +393,27 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
         }
 
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void setCmbBox(String tblname, String colName, String userID, ComboBox<String> cmbBox) {
+        String q = "SELECT " + colName + " FROM " + tblname + " WHERE User_ID = ? OR username = ?;";
+        try (Connection conn = new ConnectDB().Connect();
+             PreparedStatement ps = conn.prepareStatement(q)) {
+
+            ps.setString(1, userID);
+            ps.setString(2, userID);
+            ResultSet rs = ps.executeQuery();
+            // System.out.println("Cmb Box = " + ps);
+            while (rs.next()) {
+                String result = rs.getString(colName);
+                cmbBox.getItems().addAll(result);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -444,7 +436,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
                 ps.setString(1, pass);
                 ps.setString(2, username);
                 ps.setString(3, username);
-                //System.out.println(ps);
+                System.out.println(ps);
                 ps.executeUpdate();
             } catch (SQLException e) {
                 System.out.println(e);
@@ -669,12 +661,6 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void filter() {
-
-    }
-
     public void populateEmployees(TableView<TableModels.Employee> table) {
         String q = "SELECT * FROM Employee";
         try (Connection conn = new ConnectDB().Connect();
@@ -721,29 +707,6 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
                 String bDay = rs.getString("BDay");
                 String status = rs.getString("Status");
                 guestDataList.add(new TableModels.Guest(guestID, lastName, firstName, email, gender, cpNumber, address, bDay, status));
-            }
-            table.setItems(guestDataList);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
-
-    public void populateUsers(TableView<TableModels.Users> table) {
-        String q = "SELECT * FROM vwUserInfo";
-        try (Connection conn = new ConnectDB().Connect();
-             PreparedStatement ps = conn.prepareStatement(q)) {
-            rs = ps.executeQuery();
-            ObservableList<TableModels.Users> guestDataList = FXCollections.observableArrayList();
-
-            while (rs.next()) {
-                String userID = rs.getString("User_ID");
-                String userType = rs.getString("User_Type");
-                String lastName = rs.getString("LastName");
-                String firstName = rs.getString("FirstName");
-                String username = rs.getString("Username");
-                String password = rs.getString("Password");
-
-                guestDataList.add(new TableModels.Users(userID, username, password, lastName, firstName, null, null, null, null, null, null, userType));
             }
             table.setItems(guestDataList);
         } catch (SQLException e) {
@@ -822,7 +785,59 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static String selectFromDB(String tblname, String colName, String conditions) {
+        String q = "SELECT " + colName + " FROM " + tblname + ";";
+        String output = "";
+        try (Connection conn = new ConnectDB().Connect();
+             PreparedStatement ps = conn.prepareStatement(q)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                output = rs.getString(colName);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    return output;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void updateSYSEM(String choice, String newVal) {
+            String q = "UPDATE current_sy_sem SET " + choice +
+                    " = '" + newVal + "'";
+            System.out.println(q);
+            try (PreparedStatement ps = conn.prepareStatement(q)) {
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static void updateFine(String fine, String pk) {
+    String q = "UPDATE Book_reservation SET Fine = " + fine +
+            ", isPaid = 0 WHERE Reservation_ID = '" + pk + "';";
+    System.out.println(q);
+    try (PreparedStatement ps = conn.prepareStatement(q)) {
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e);
+    }
+}
+
+    public static void updateIsPaid(String ispaid, String pk) {
+        String q = "UPDATE Book_reservation SET isPaid = " + ispaid
+        + "WHERE Reservation_ID = '" + pk + "';";
+        System.out.println(q);
+        try (PreparedStatement ps = conn.prepareStatement(q)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private interface TextControl {
         void setText(String text);

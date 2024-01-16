@@ -13,17 +13,19 @@ import java.util.regex.Pattern;
 
 public class InputValidation {
 
-    // ----- 1.) validates name. may have upper, lowercase values, spaces, and special characters or accents. no numerals. has character limit
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static boolean isValidName(String name) {
         if (name.isEmpty() || name.length() > 30) {
-            return false; // empty or too long is not a valid name
+            return false;
         }
 
-        // Remove diacritics (accents) from the name
+
         String normalized = Normalizer.normalize(name, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
-        // Regular expression to allow letters and spaces
+
         String regex = "^[\\p{L} ]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(normalized);
@@ -31,16 +33,18 @@ public class InputValidation {
         return matcher.matches();
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static boolean isValidPass(String pass) {
         if (pass.length() > 20 || pass.length() <= 7) {
             return false; // empty or too long is not a valid name
         }
 
-        // Remove diacritics (accents) from the name
+
         String normalized = Normalizer.normalize(pass, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
-        // Regular expression to allow letters, spaces, and some common special characters
         String regex = "^(?=.*[\\p{L}])(?=.*[0-9])[\\p{L}0-9_]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(normalized);
@@ -48,11 +52,14 @@ public class InputValidation {
         return matcher.matches();
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static boolean isValidUserName(String username) {
         if ((username.length() >= 30) || (username.length() <= 5))
             return false;
 
-        // Remove diacritics (accents) from the name
+
         String normalized = Normalizer.normalize(username, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
         String regex = "^[a-zA-Z0-9_]+$";
@@ -62,14 +69,15 @@ public class InputValidation {
         return matcher.matches();
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // ----- 2.) validates cp_num. starts with "09" and is followed by exactly 9 more digits
     public static boolean isValidNumber(String number) {
         if (number.isEmpty()) {
-            return false; // empty is not a valid number
+            return false;
         }
-        // Regular expression to validate Filipino mobile number
-        String regex = "^09\\d{9}$";
+
+        String regex = "^[-+]?\\d*\\.?\\d+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(number);
 
@@ -77,31 +85,16 @@ public class InputValidation {
     }
 
 
-    // ----- 3.) validates a type-written date picker date
-    public static boolean isValidDate(String dateString) {
-        if (dateString.isEmpty()) {
-            System.out.println("Empty date");
-            return false; // empty date
-        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate.parse(dateString, formatter);
-            return true;
-        } catch (DateTimeParseException e) {
-            System.out.println("Invalid date format: " + e.getMessage());
-            return false;
-        }
-    }
-
-
-    // ----- 4.) validates address, not null and has char limit
     public static boolean isValidAddress(String address) {
         return !address.isEmpty() && address.length() <= 255;
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // ----- 5.) validates a description. can have upper, lower case and dashes, apostrophes, parentheses, dots, numerals
     public static boolean isValidDescription(String description) {
         if (description.isEmpty()) {
             return false; // empty is not a valid description
@@ -112,14 +105,16 @@ public class InputValidation {
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 
         // Regular expression to allow letters, spaces, dashes, apostrophes, parentheses, dots, and numerals
-        String regex = "^[\\p{L} .'-()0-9]+$";
+        String regex = "^[A-Za-z \\-'().:0-9]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(normalized);
 
         return matcher.matches();
     }
 
-    // ----- 6.) validates a primary key and checks validity. can have upper, lower case and dash. must not have same code
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static boolean isValidCode(String strCode, String strTableName, String strColumn) {
         if (!strCode.matches("^[A-Za-z\\-]*$") || strCode.isEmpty() || strCode.length() > 10) {
             return false; // Invalid code format
@@ -128,17 +123,10 @@ public class InputValidation {
         return isCodeUnique(strCode, strTableName, strColumn);
     }
 
-
-    // ----- 7.) validates a subject primary key and checks validity. can have upper, lower case, dash, dots, spaces, numerals. must not have same code
-    public static boolean isValidSubjectCode(String strCode, String strTableName, String strColumn) {
-        if (!strCode.matches("^[A-Za-z0-9\\- .()]*$") || strCode.isEmpty() || strCode.length() > 10) {
-            return false; // Invalid code format
-        }
-        return isCodeUnique(strCode, strTableName, strColumn);
-    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    // ----- 8.) validates primary keys uniqueness
     public static boolean isCodeUnique(String strCode, String strTableName, String strColumn) {
         // Check if the code already exists in the specified column of the table
         String query = "SELECT COUNT(*) FROM " + strTableName + " WHERE " + strColumn + " = ?";
@@ -157,6 +145,8 @@ public class InputValidation {
         }
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static boolean isValidEmail(String email){
         if ((email.length() >= 50) || (email.length() <= 5))
@@ -172,5 +162,56 @@ public class InputValidation {
 
         return matcher.matches();
     }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean isValidTime(String time){
+        String regex = "\\b(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])\\b";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(time);
+        return matcher.matches();
+
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean isValidFine(String fine){
+        String regex = "^\\d*\\.?\\d*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(fine);
+        return matcher.matches();
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean isValidSY(String sy){
+        String regex = "^[0-9\\-]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(sy);
+        return matcher.matches();
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean isValidLimit(String limit){
+        String regex = "^[1-9]\\d*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(limit);
+        return matcher.matches();
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static boolean isValidISBN(String input) {
+        String regex = "^ISBN[-\\d]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
 
 }

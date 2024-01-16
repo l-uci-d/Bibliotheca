@@ -7,33 +7,22 @@ import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 
-import static com.example.oopapplication.DataBaseMethods.getBookTransacts;
+import static com.example.oopapplication.AdminController.*;
+
+import static com.example.oopapplication.DataBaseMethods.*;
 import static com.example.oopapplication.HelperMethods.*;
 
 
@@ -42,71 +31,58 @@ public class MainMenuController {
     private static final List<String> STUDENT_COLUMN_NAMES = Arrays.asList("FirstName", "LastName", "Gender", "Email", "CP_Num", "Address", "BDay");
     private static final List<String> GUEST_COLUMN_NAMES = Arrays.asList("FirstName", "LastName", "Gender", "Email", "CP_Num", "Address", "BDay");
     private static final List<String> BOOK_COL_NAMES = Arrays.asList("Book_ID", "Description", "Author", "Publisher",  "ISBN");
-
     private static final List<String> RESERVATION_COL_NAMES = Arrays.asList("Reservation_ID", "SY", "Semester", "Student_No", "Book_ID", "Transaction_Status"
             , "Request_DateTime");
     private static final List<String> APPOINTMENT_COL_NAMES = Arrays.asList("Appointment_ID", "SY", "Semester", "Visitor_ID",
             "Slot_ID", "Day", "Date", "Transaction_Status", "Request_DateTime");
 
-    public LocalDateTime currentDateTime = null;
     public DataBaseMethods DB = new DataBaseMethods();
 
-    @FXML
-    PasswordField passSU, passSU1;
-    @FXML
-    TableView<TableModels.Book> tblVwBooks;
-    @FXML
-    TableColumn<TableModels.Book, String> tblColBookID, tblColDesc, tblColAuthor, tblColPublisher, tblColDatePublished, tblColISBN, tblColStatus;
-    @FXML
-    TableColumn<TableModels.Book, Double> tblColPrice;
+    @FXML PasswordField passSU, passSU1;
+
+    @FXML TableView<TableModels.Book> tblVwBooks;
+        @FXML TableColumn<TableModels.Book, String> tblColBookID, tblColDesc, tblColAuthor, tblColPublisher, tblColDatePublished, tblColISBN, tblColStatus;
+        @FXML TableColumn<TableModels.Book, Double> tblColPrice;
+
     boolean isEdit = false;
-    @FXML
-    private AnchorPane anchorPaneRoot, anchorPaneTaskbar, anchorPaneDesktop,
-            anchorPaneMiniDashboard, anchorPaneDashboardHead, anchorPaneDashboard,
+
+    @FXML private AnchorPane anchorPaneRoot, anchorPaneTaskbar, anchorPaneDesktop, anchorPaneFineBook,
+            anchorPaneFineAppt, anchorPaneMiniDashboard, anchorPaneDashboardHead, anchorPaneDashboard,
             anchorPaneMiniAppointments, anchorPaneAppointments, anchorPaneAppointmentsHead,
             anchorPaneMiniBooks, anchorPaneBooks, anchorPaneBooksHead,
             anchorPaneMiniAccount, anchorPaneAccount, anchorPaneAccountHead;
-    @FXML
-    private GridPane gridPaneBG;
-    @FXML
-    private Group grpPass1, grpPass2;
-    @FXML
-    private Button btnLogOut, btnXDashboard, btnXBooks, btnXAppointments, btnXAccount, btnAccountEditCancel, btnAccountSave,
-            btnAccDelete,
-            btnLegend, btnAdd, btnRemove, btnConfirm, btnFilter, btnDonate, btnAppointmentConfirm;
-    @FXML
-    private DatePicker datePickerBDay;
-    @FXML
-    private ComboBox<String> cmbSubject, cmbBoxAccountGender;
-    @FXML
-    private Label lblClock, lblDate, lblMonday, lblSaturday,
+
+    @FXML private GridPane gridPaneBG;
+
+    @FXML private Group grpPass1, grpPass2;
+
+    @FXML private Button btnLogOut, btnXDashboard, btnXBooks, btnXAppointments, btnXAccount, btnAccountEditCancel, btnAccountSave,
+            btnAccDelete, btnLegend, btnAdd, btnRemove, btnConfirm, btnFilter, btnDonate, btnAppointmentConfirm;
+
+    @FXML private DatePicker datePickerBDay;
+
+    @FXML private ComboBox<String> cmbSubject, cmbBoxAccountGender;
+
+    @FXML private Label lblClock, lblDate, lblMonday, lblSaturday,
             lblBooksHead, lblDashboardHead, lblAppointmentsHead, lblAccountHead,
             lblBDay, lblAccountID, lblAccountFN, lblAccountLN, lblAge, lblAccountUserType, lblAccountCourse,
             lblBookHead, lblBorrow, lblSearchAuthor, lblSearchTitle, lblSubject, lblConfirmed,
             lblChosenDate, lblChosenTime, lblMInitial,
             lblShowSU, lblShowSU1, lblContext,
             lblClearSelect, lblSelectedBookID;
-    @FXML
-    private TextField txtAccountID, txtAccountFN, txtAccountLN,
+    @FXML private TextField txtAccountID, txtAccountFN, txtAccountLN,
             txtAccountEmail, txtAccountCPNumber, txtAccountAddress, txtAccountUN, txtAccountCourse,
             txtSearchAuthor, txtSearchTitle, txtSearchPublisher, txtSearchISBN,
             txtFieldDate, txtFieldTime, txtMInitial,
             txtPassSU, txtPassSU1;    public String currentSY = getCurrentSYSEM("SY"),
             currentSem = getCurrentSYSEM("Sem");
-    @FXML
-    private TextArea txtAreaList, txtAreaLegend, txtAreaPendingAppts, txtAreaFine, txtAreaPendingBooks,
+    @FXML private TextArea txtAreaList, txtAreaLegend, txtAreaPendingAppts, txtAreaFine, txtAreaPendingBooks,
             txtAreaApproved
                     ;
 
-    @FXML
-    private TableView<TableModels.SlotData> tblVwAppointments;
-
-    @FXML
-    private TableColumn<TableModels.SlotData, String> tblColDay, tblColTimeIn, tblColTimeOut;
-    @FXML
-    private TableColumn<TableModels.SlotData, Integer> tblColOccupiedSlots, tblColSlotLimit;
-
-
+    @FXML private TableView<TableModels.SlotData> tblVwAppointments;
+        @FXML private TableColumn<TableModels.SlotData, String> tblColDay, tblColTimeIn, tblColTimeOut;
+        @FXML private TableColumn<TableModels.SlotData, Integer> tblColOccupiedSlots, tblColSlotLimit;
 
 
     private final String[] subjects = {"GEN", "COM", "HIS", "FIN", "FIT", "SCI",
@@ -137,22 +113,6 @@ public class MainMenuController {
         refresh();
     }
 
-    public void setCurrentDateTime(LocalDateTime currentDateTime) {
-        if (currentDateTime != null)
-            this.currentDateTime = currentDateTime;
-        else
-            this.currentDateTime = LocalDateTime.now();
-    }
-
-    public LocalTime getCurrentTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedTime = this.currentDateTime.format(formatter);
-        return LocalTime.parse(formattedTime, formatter);
-    }
-
-    public LocalDate getCurrentDate() {
-        return this.currentDateTime.toLocalDate();
-    }
 
     public String getUserType() {
         return this.userType;
@@ -196,17 +156,6 @@ public class MainMenuController {
         subjectNames.put("CLT", "CULTURAL STUDIES");
         subjectNames.put("LIT", "LITERATURE");
         subjectNames.put("GEN", "GENERAL STUFF");
-        Map<String, Integer> subjectCounts = new HashMap<>();
-
-
-        for (String subject : subjects) {
-            if (!subject.isEmpty() || subject != " ") {
-                int count = DataBaseMethods.getCountLike("Book", subject, "Book_ID", "");
-                subjectCounts.put(subject, count);
-
-            }
-        }
-
 
         StringBuilder result = new StringBuilder();
 
@@ -214,21 +163,89 @@ public class MainMenuController {
             if (subject != null) {
                 String subjectName = subjectNames.get(subject);
                 result.append(String.format("%-4s - %-20s \n", subject, subjectName));
-            }
-        }
-
+            }}
         return result.toString();
     }
 
-    private final ObservableList<TableModels.Book> userAppts = FXCollections.observableArrayList();
-    private final ObservableList<TableModels.PendingBooks> userPendingBooks = FXCollections.observableArrayList()
-            , approvedBooks = FXCollections.observableArrayList()
-            ;
+    private final ObservableList<TableModels.PendingAppts> userAppts = FXCollections.observableArrayList();
+    private final ObservableList<TableModels.PendingAppts> approvedAppts = FXCollections.observableArrayList();
+    private final ObservableList<TableModels.PastAppts> declinedAppts = FXCollections.observableArrayList();
+    private final ObservableList<TableModels.PendingBooks> userPendingBooks = FXCollections.observableArrayList();
+    private final ObservableList<TableModels.PendingBooks> approvedBooks = FXCollections.observableArrayList();
+    private final ObservableList<TableModels.PastBooks> declinedBooks = FXCollections.observableArrayList();
+
+
+    private void refreshStudentTextAreas(){
+
+        populate("vwPendingBookRequests", PENDING_BOOK_COLS, userPendingBooks, null, TableModels.PendingBooks.class,
+         " WHERE TRANSACTION_STATUS = 'PENDING' AND STUDENT_NO = '" + getTblID() + "';");
+        if(!userPendingBooks.isEmpty()){
+            txtAreaPendingBooks.setText("Your PENDING Book Reservations:\n");
+            for(TableModels.PendingBooks pendingBooks : userPendingBooks){
+                txtAreaPendingBooks.appendText(">" + pendingBooks.getBook_ID() + " - " + pendingBooks.getBook_title() + "\n");
+            }}
+        populate("vwPendingBookRequests", PENDING_BOOK_COLS, approvedBooks, null, TableModels.PendingBooks.class,
+                " WHERE TRANSACTION_STATUS = 'APPROVED' AND STUDENT_NO = '" + getTblID() + "';");
+        if(!approvedBooks.isEmpty()){
+            txtAreaApproved.setText("Your APPROVED Book Requests: \n");
+            for(TableModels.PendingBooks approvedBooks : approvedBooks){
+                txtAreaApproved.appendText(">" + approvedBooks.getBook_ID() + " - " + approvedBooks.getBook_title() + "\n");
+            }
+            txtAreaApproved.appendText("\nPlease visit the library to start the transaction. \n");
+        }
+        populate("vwBookRequests", BOOK_REQS, declinedBooks, null, TableModels.PastBooks.class,
+                " WHERE TRANSACTION_STATUS = 'DECLINED' AND STUDENT_NO = '" + getTblID() + "'" + " AND FINE != 0;");
+        if(!declinedBooks.isEmpty()){
+            if(getIntCount("Book_Reservation","!= 0 ", "Fine", " AND isPaid = 0 AND " +
+                    "Student_No = '" + getTblID() + "'") != 0){
+                float totalFine = 0;
+                for(TableModels.PastBooks declinedBooks : declinedBooks){
+                    totalFine += Float.parseFloat(declinedBooks.getFine());
+                }
+                txtAreaFine.setText("Your total fine is PHP " + totalFine +
+                        ". \nPlease pay to be able to make transactions again.\n\n" );
+                anchorPaneFineBook.setVisible(true);
+                anchorPaneFineAppt.setVisible(true);
+            }
+            else{
+                anchorPaneFineBook.setVisible(false);
+                anchorPaneFineAppt.setVisible(false);
+            }
+            txtAreaFine.appendText("Your DECLINED Book Requests: \n");
+            for(TableModels.PastBooks approvedBooks : declinedBooks){
+                txtAreaFine.appendText(">" + approvedBooks.getBook_ID() + " - " + approvedBooks.getBook_title() + "\n");
+            }}}
 
     private void refreshTxtAreas(){
-        getBookTransacts("vwPendingBookRequests", "PENDING", getTblID(), userPendingBooks, txtAreaPendingBooks);
-        getBookTransacts("vwPendingBookRequests", "APPROVED", getTblID(), userPendingBooks, txtAreaApproved);
-    }
+        populate("vwPendingAppointments", PENDING_APPTS_COLS, userAppts, null, TableModels.PendingAppts.class,
+                " WHERE TRANSACTION_STATUS = 'PENDING' AND VISITOR_ID = '" + getTblID() + "';");
+        if(!userAppts.isEmpty()){
+            txtAreaPendingAppts.setText("Your PENDING Appointments:\n");
+            for(TableModels.PendingAppts Appts : userAppts){
+                txtAreaPendingAppts.appendText(">" + Appts.getSlot_ID() + ", " + Appts.getDay() +  " - " + Appts.getDate() +"\n");
+            }
+        }
+        populate("vwPendingAppointments", PENDING_APPTS_COLS, approvedAppts, null, TableModels.PendingAppts.class,
+                " WHERE TRANSACTION_STATUS = 'APPROVED' AND VISITOR_ID = '" + getTblID() + "';");
+        if(!userAppts.isEmpty()){
+            txtAreaApproved.appendText("\nYour APPROVED Appointment Requests:\n");
+            for(TableModels.PendingAppts Appts : userAppts){
+                txtAreaApproved.appendText(">" + Appts.getSlot_ID() + ", " + Appts.getDay() +  " - " + Appts.getDate() + "\n");
+            }
+
+            txtAreaApproved.appendText("Please head to the library at the chosen time and date.");
+        }
+
+        populate("Appointment", PAST_APPTS_COL, declinedAppts, null, TableModels.PastAppts.class,
+                " WHERE TRANSACTION_STATUS = 'DECLINED' AND Visitor_ID = '" + getTblID() + "'");
+
+        if(!declinedAppts.isEmpty()){
+            txtAreaFine.appendText("Your DECLINED Appointment requests: \n");
+
+            for(TableModels.PendingAppts Appts : userAppts){
+                txtAreaApproved.appendText(">" + Appts.getSlot_ID() + ", " +
+                        Appts.getDay() +  " - " + Appts.getDate() + "\n");
+            }}}
 
     public void initialize2(){
         txtAreaLegend.appendText(initializeLegend());
@@ -241,12 +258,13 @@ public class MainMenuController {
             btnAdd.setDisable(true);
             btnRemove.setDisable(true);
             btnConfirm.setDisable(true);
-
         }
+
         if(getUserType().equalsIgnoreCase("S")){
-        refreshTxtAreas();
-
+        refreshStudentTextAreas();
         }
+
+        refreshTxtAreas();
 
         LocalDate monday = getCurrentDate().with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
         lblMonday.setText(monday + " - ");
@@ -254,29 +272,23 @@ public class MainMenuController {
         lblSaturday.setText(String.valueOf(saturday));
 
 
-
-
-
     }
     public void initialize() {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+        System.out.println(getCurrentDateTime());
+        if(getCurrentDateTime() == null)
+            setCurrentDateTime(null);
 
 
         setCurrentSYSEM();
 
-        ConnectDB db = new ConnectDB();
-        Connection conn = db.Connect();
-        ResultSet rs = null;
-        PreparedStatement ps = null;
         cmbSubject.getItems().addAll(subjects);
         cmbBoxAccountGender.getItems().addAll(gender);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateDateTimeLabels(lblClock, lblDate, null)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateDateTimeLabels(lblClock, lblDate, null, getCurrentDateTime())));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        btnLogOut.setUserData("login.fxml");
+        btnLogOut.setUserData("FXMLS/login.fxml");
 
         anchorPaneMiniDashboard.setUserData(anchorPaneDashboard);
         btnXDashboard.setUserData(anchorPaneDashboard);
@@ -324,17 +336,14 @@ public class MainMenuController {
         tblVwBooks.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> bookListener(newValue));
 
-
         lblShowSU.setUserData(txtPassSU);
         txtPassSU.setUserData(passSU);
-
         lblShowSU1.setUserData(txtPassSU1);
         txtPassSU1.setUserData(passSU1);
 
-
     }
 
-    private  void apptListener(TableModels.SlotData newValue){
+    private void apptListener(TableModels.SlotData newValue){
         if(newValue!=null){
             LocalDate currentDate = getCurrentDate();
             txtFieldDate.setText(String.valueOf(getCurrentDate().with(TemporalAdjusters.next(getDayOfWeekFromString(newValue.getDay())))));
@@ -361,7 +370,6 @@ public class MainMenuController {
         bookListener(null);
 
     }
-
     public void saveEdits(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (lblShowSU.getText().equals("Hide"))
@@ -398,7 +406,6 @@ public class MainMenuController {
                     return;
                 }
             }
-
 
             List<Object> newVals = Arrays.asList(txtAccountFN.getText(), txtAccountLN.getText(), cmbBoxAccountGender.getValue(), txtAccountEmail.getText()
                     , txtAccountCPNumber.getText(), txtAccountAddress.getText(),
@@ -516,8 +523,6 @@ public class MainMenuController {
         }
     }
 
-
-
     public void openApp(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var clickedPane = (AnchorPane) event.getSource();
         var appName = (AnchorPane) clickedPane.getUserData();
@@ -528,7 +533,6 @@ public class MainMenuController {
         clickedPane.setStyle("-fx-background-color: rgba(244,199,92,0.5);");
         appName.setVisible(true);
         EnterAnimation(appName);
-
     }
 
     public void closeApp(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -537,7 +541,6 @@ public class MainMenuController {
         var miniApp = (AnchorPane) appName.getUserData();
         miniApp.setStyle(null);
         ExitAnimation(appName);
-
     }
 
     public void EnterAnimation(AnchorPane toPane) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -547,7 +550,6 @@ public class MainMenuController {
         scaleTransition.setFromY(0.1);
         scaleTransition.setToX(1);
         scaleTransition.setToY(1);
-
         scaleTransition.play();
         translateTransition.play();
 
@@ -568,8 +570,6 @@ public class MainMenuController {
         });
     }
 
-
-
     public void deleteAccount(MouseEvent event) {
         confirm = new Alert(Alert.AlertType.CONFIRMATION);
         ButtonType result = showAlert(confirm, "Confirm Delete?",
@@ -577,7 +577,7 @@ public class MainMenuController {
                         " PERMANENTLY DELETED. Are you Sure?");
         if (result == ButtonType.OK) {
             DataBaseMethods.dropDB("USER", getTblID(), "User_ID");
-            change("login.fxml", anchorPaneRoot, event);
+            change("FXMLS/login.fxml", anchorPaneRoot, event);
         } else {
         }
     }
@@ -587,15 +587,13 @@ public class MainMenuController {
     }
 
     public void LogOut(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        change("login.fxml", anchorPaneRoot, event);
+        change("FXMLS/login.fxml", anchorPaneRoot, event);
     }
-
-
-
 
 
     public void addToList(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         TableModels.Book selectedBook = tblVwBooks.getSelectionModel().getSelectedItem();
+
         if (selectedBook != null) {
             if (!selectedBookIds.contains(selectedBook)) {
                 if(selectedBook.getStatus().equalsIgnoreCase("X") || selectedBook.getStatus().equalsIgnoreCase("R"))
@@ -603,6 +601,17 @@ public class MainMenuController {
                     showAlert(info, "Error Adding", "Selected Book is not available for Borrowing.");
                     return;
                 }
+                for(TableModels.PendingBooks books : userPendingBooks){
+                    System.out.println("checking...");
+                    System.out.println(selectedBook.getBookId());
+                    System.out.println(books.getBook_ID());
+                    if(selectedBook.getBookId().equalsIgnoreCase(books.getBook_ID())){
+
+                        showAlert(warning, "Error Adding", "Selected Book is already in your pending list.");
+                        return;
+                    }
+                }
+
                 selectedBookIds.add(selectedBook);
                 refreshList(selectedBookIds);
             } else {
@@ -610,7 +619,6 @@ public class MainMenuController {
             }
         } else showAlert(info, "Error Adding", "Please select a book!");
     }
-
 
     public void refreshList(ObservableList<TableModels.Book> selectedBookIds) {
         txtAreaList.clear();
@@ -635,17 +643,11 @@ public class MainMenuController {
     }
 
 
-
     public void filterTable(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var stringList = createValuesList(cmbSubject, txtSearchTitle, txtSearchAuthor,
                 txtSearchPublisher, txtSearchISBN);
-
         DB.populateBook(tblVwBooks, createHashMap(stringList, BOOK_COL_NAMES));
-
     }
-
-
-
 
 
     public void confirm(MouseEvent event) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -677,11 +679,12 @@ public class MainMenuController {
                     iterator.remove();
                     newVals.addAll(Arrays.asList(res_ID, sy, sem, student_no, book_id, transaction_Status, request_DateTime));
                     DataBaseMethods.insertIntoDB("Book_Reservation", RESERVATION_COL_NAMES, newVals);
-                    //add to db
+
                 }
 
                 refreshList(selectedBookIds);
-
+                refreshStudentTextAreas();
+                refreshTxtAreas();
                 showInfo(info, "Transaction Confirmed", "Your Request has been received, please wait" +
                         " for approval and check your Dashboard for updates.\n\nRequested Books:\n", books);
             }
@@ -694,9 +697,18 @@ public class MainMenuController {
             showAlert(error, "Transaction Failed", "Please Select a Slot!");
         }
         else {
+            TableModels.SlotData slot = tblVwAppointments.getSelectionModel().getSelectedItem();
+            for(TableModels.PendingAppts appts : userAppts){
+                if(appts.getDate().equalsIgnoreCase(txtFieldDate.getText())){
+                    System.out.println(appts.getDate());
+                    System.out.println(txtFieldDate.getText());
+                    showAlert(warning, "Error Confirming", "Appointment is already in your pending list.");
+                    return;
+                }
+            }
             if (showAlert(confirm, "Confirm Transaction",
                     "Do you want to reserve this Slot?") == ButtonType.OK) {
-                TableModels.SlotData slot = tblVwAppointments.getSelectionModel().getSelectedItem();
+
                 String appt_id = null, sy = null, sem = null, visitor_ID = null, slot_id = null, day = null,
                         date = null, transaction_Status = null, request_DateTime = null, time = null;
                 List<String> newVals = new ArrayList<>();
@@ -714,8 +726,10 @@ public class MainMenuController {
                         transaction_Status, request_DateTime));
                 DataBaseMethods.insertIntoDB("Appointment", APPOINTMENT_COL_NAMES, newVals);
                 showInfo(info, "Transaction Confirmed", "Your Request has been received, please wait" +
-                        " for approval and check your Dashboard for updates. Appointment Date: " + date +
-                        "Appointment Time: " + time);
+                        " for approval and check your Dashboard for updates.\n", Arrays.asList("Appointment Date: " + date +
+                        "\nAppointment Time: " + time));
+                refreshStudentTextAreas();
+                refreshTxtAreas();
 
             }
         }

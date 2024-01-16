@@ -11,14 +11,13 @@ import java.util.Objects;
 
 
 public class MainApplication extends Application {
-
     public static void main(String[] args) {
         launch();
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("FXMLS/login.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("Bibliotheca | Log In");
         stage.setScene(scene);
