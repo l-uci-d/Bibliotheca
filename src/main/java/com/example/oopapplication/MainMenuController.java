@@ -194,7 +194,7 @@ public class MainMenuController {
             txtAreaApproved.appendText("\nPlease visit the library to start the transaction. \n");
         }
         populate("vwBookRequests", BOOK_REQS, declinedBooks, null, TableModels.PastBooks.class,
-                " WHERE TRANSACTION_STATUS = 'DECLINED' AND STUDENT_NO = '" + getTblID() + "'" + " AND FINE != 0;");
+                " WHERE STUDENT_NO = '" + getTblID() + "'" + " AND TRANSACTION_STATUS = 'DECLINED' OR  FINE != 0;");
         if(!declinedBooks.isEmpty()){
             if(getIntCount("Book_Reservation","!= 0 ", "Fine", " AND isPaid = 0 AND " +
                     "Student_No = '" + getTblID() + "'") != 0){

@@ -105,7 +105,7 @@ public class DataBaseMethods {
         try (Connection conn = new ConnectDB().Connect();
              PreparedStatement ps = conn.prepareStatement(q)) {
             ResultSet rs = ps.executeQuery();
-            //System.out.println(ps);
+            System.out.println(ps);
             if (rs.next())
                 count = rs.getInt("recordcount");
         } catch (SQLException e) {
