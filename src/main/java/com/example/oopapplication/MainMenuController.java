@@ -227,9 +227,9 @@ public class MainMenuController {
         }
         populate("vwPendingAppointments", PENDING_APPTS_COLS, approvedAppts, null, TableModels.PendingAppts.class,
                 " WHERE TRANSACTION_STATUS = 'APPROVED' AND VISITOR_ID = '" + getTblID() + "';");
-        if(!userAppts.isEmpty()){
+        if(!approvedAppts.isEmpty()){
             txtAreaApproved.appendText("\nYour APPROVED Appointment Requests:\n");
-            for(TableModels.PendingAppts Appts : userAppts){
+            for(TableModels.PendingAppts Appts : approvedAppts){
                 txtAreaApproved.appendText(">" + Appts.getSlot_ID() + ", " + Appts.getDay() +  " - " + Appts.getDate() + "\n");
             }
 
