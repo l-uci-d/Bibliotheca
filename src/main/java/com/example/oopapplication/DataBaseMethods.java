@@ -31,7 +31,7 @@ public class DataBaseMethods {
             ps.setString(1, val1);
             ps.setString(2, val2);
 
-            //System.out.println(ps);
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 a = rs.getString(colName);
@@ -58,7 +58,6 @@ public class DataBaseMethods {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception as needed
         }
     }
 
@@ -90,7 +89,7 @@ public class DataBaseMethods {
              PreparedStatement ps = conn.prepareStatement(q)) {
             ps.setString(1, input);
             ResultSet rs = ps.executeQuery();
-            //System.out.println(ps);
+            System.out.println(ps);
             if (rs.next())
                 count = rs.getInt("recordcount");
         } catch (SQLException e) {
@@ -142,6 +141,7 @@ public class DataBaseMethods {
 
         try (Connection conn = new ConnectDB().Connect();
              PreparedStatement ps = conn.prepareStatement(q)) {
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
 
             while (rowNumber > 0) {
@@ -149,8 +149,9 @@ public class DataBaseMethods {
                 rowNumber--;
             }
 
+
             lastID = rs.getString(colName);
-            //System.out.println("Unincremented ID: " + lastID);
+            System.out.println("Unincremented ID: " + lastID);
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -160,7 +161,7 @@ public class DataBaseMethods {
             String numericPartStr = lastID.substring(1);
 
             int numericPart = Integer.parseInt(numericPartStr);
-            numericPart++;
+            numericPart+=2;
 
             String formattedNumericPart = String.format("%04d", numericPart);
             return nonNumericPart + formattedNumericPart;
@@ -244,7 +245,7 @@ public class DataBaseMethods {
             q.append(");");
 
         }
-        //System.out.println(q);
+        System.out.println(q);
         try {
             try (PreparedStatement preparedStatement = conn.prepareStatement(q.toString())) {
                 for (int i = 0; i < colNames.size(); i++) {
@@ -272,7 +273,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
         q.append(" WHERE " + colPk + " = ? " + conditions);
 
     }
-    //System.out.println(q);
+    System.out.println(q);
     try {
         try (PreparedStatement preparedStatement = conn.prepareStatement(q.toString())) {
             for (int i = 0; i < colNames.size(); i++) {
@@ -423,7 +424,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
             //System.out.println("Received un : " + username);
             String q1 = "UPDATE user SET username = '" + username + "' where user_ID = '"
                     + userID + "' OR username = '" + userID + "';";
-            // System.out.println(q1);
+            System.out.println(q1);
             try (PreparedStatement ps = conn.prepareStatement(q1)) {
                 ps.executeUpdate();
             } catch (SQLException e) {
@@ -450,14 +451,14 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
         }
         q.setLength(q.length() - 2);
         q.append(" WHERE " + pk + "= '" + userID + "';");
-        //System.out.println(q);
+        System.out.println(q);
 
         try {
             try (PreparedStatement preparedStatement = conn.prepareStatement(q.toString())) {
                 for (int i = 0; i < colNames.size(); i++) {
                     setParameter(preparedStatement, i + 1, newValues.get(i));
                 }
-                //System.out.println(preparedStatement);
+                System.out.println(preparedStatement);
                 int rows_affected = preparedStatement.executeUpdate();
                 if(rows_affected != 0)
                     showInfo(info, "Updated Information", "Successfully Updated Account Information.");
@@ -484,14 +485,14 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
         }
         q.setLength(q.length() - 2);
         q.append(" WHERE " + pk + "= '" + userID + "';");
-        //System.out.println(q);
+        System.out.println(q);
 
         try {
             try (PreparedStatement preparedStatement = conn.prepareStatement(q.toString())) {
                 for (int i = 0; i < colNames.size(); i++) {
                     setParameter(preparedStatement, i + 1, newValues.get(i));
                 }
-                //System.out.println(preparedStatement);
+                System.out.println(preparedStatement);
                 int rows_affected = preparedStatement.executeUpdate();
                 if(rows_affected != 0)
                     showInfo(info, "Updated Information", "Successfully Updated Account Information.");
@@ -573,7 +574,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
                     slotDataList.add(new TableModels.SlotData(slotID, day, timeIn, timeOut, slotLimit));
             }
 
-            // System.out.println("SlotData List: " + slotDataList);
+            System.out.println("SlotData List: " + slotDataList);
             table.setItems(slotDataList);
 
         } catch (SQLException e) {
@@ -607,7 +608,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
                     ps.setString(parameterIndex++, "%" + entry.getKey() + "%");
                 }
             }
-            //System.out.println(ps);
+            System.out.println(ps);
             rs = ps.executeQuery();
             ObservableList<TableModels.Book> bookDataList = FXCollections.observableArrayList();
             while (rs.next()) {
@@ -724,7 +725,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
             ps.setString(2, userID);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                // System.out.println("Records exists");
+                System.out.println("Records exists");
                 usertype = rs.getString("User_Type");
             }
 
@@ -747,7 +748,7 @@ public static void updateDB(String tblName, List<String> colNames, List<String> 
             ps.setString(2, userID);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                //System.out.println("Password retrieved");
+                System.out.println("Password retrieved");
                 actualPass = rs.getString("Password");
             }
 

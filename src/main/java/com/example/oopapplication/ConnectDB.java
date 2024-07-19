@@ -8,7 +8,7 @@ public class ConnectDB {
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Group2", "root", "12qwaszx");
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Group2", "root", "seriansp1");
             //System.out.println("Connected Successfully");
         } catch (Exception e) {
             System.out.println(e);

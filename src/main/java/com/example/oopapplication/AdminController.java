@@ -44,7 +44,7 @@ public class AdminController {
         "User_FirstName", "User_LastName", "Request_DateTime", "Transaction_Status", "Approver_ID", "Approval_DateTime",
         "Fine", "isPaid");
     public static final List<String> PENDING_BOOK_COLS = Arrays.asList("Reservation_ID", "Book_ID", "Book_title", "Student_No",
-            "User_FirstName", "User_LastName", "Request_DateTime", "Transaction_Status", "Approver_ID", "Approval_DateTime");
+            "User_FirstName", "User_LastName", "Request_DateTime", "Transaction_Status");
     public static final List<String> PENDING_APPTS_COLS = Arrays.asList("Appointment_ID", "Slot_ID", "Date", "Day", "Visitor_ID",
             "FirstName", "LastName", "Request_DateTime", "Transaction_Status", "Approver_ID", "Approval_DateTime");
     public static final List<String> CURRENT_BOOKS_COLS = Arrays.asList("Reservation_ID", "Book_ID", "Book_title", "Date_Reserved",
@@ -1264,7 +1264,7 @@ public class AdminController {
                         txtSlotAvailableSlot.getText() + "?")  == ButtonType.OK){
                     updateDB("Slot", Arrays.asList("Slot_Limit"),
                             Arrays.asList(txtSlotAvailableSlot.getText()), "Slot_ID", slot.getID(),
-                            " AND DAY = " + slot.getDay());
+                            " AND DAY = '" + slot.getDay() + "';");
                     showInfo(info, "Success", "Successfully edited slot limit.");
                     refreshSlot();
                 }
